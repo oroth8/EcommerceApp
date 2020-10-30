@@ -6,5 +6,6 @@ module.exports = function(sequelize, DataTypes) {
         subCategory: DataTypes.STRING,
         price: DataTypes.DECIMAL(10,2),
         image_URLs: DataTypes.STRING
-    })
-}
+    });
+    return Product;
+};
