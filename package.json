@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/oroth8/EcommerceApp/issues"
   },
-  "homepage": "https://github.com/oroth8/EcommerceApp#readme"
+  "homepage": "https://github.com/oroth8/EcommerceApp#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
 }
