@@ -1,0 +1,20 @@
+{
+  "name": "EcommerceApp",
+  "version": "1.0.0",
+  "description": "Project 2 repo (REPO name will change when project is assigned.",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oroth8/EcommerceApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oroth8/EcommerceApp/issues"
+  },
+  "homepage": "https://github.com/oroth8/EcommerceApp#readme"
+}
