@@ -1,0 +1,1 @@
+CREATE DATABASE ecommerceapp_db;
