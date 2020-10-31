@@ -19,6 +19,7 @@ module.exports = function(app) {
         });
     }else{
       db[`${table}`].findAll({}).then(function(results){
+        // res.render("admin", { result: results });
         res.json(results);
       });
     }
