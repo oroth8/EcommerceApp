@@ -4,7 +4,8 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
- 
+
+
 
   // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
   app.get("/admin/:table/:category?", function(req,res){
@@ -19,8 +20,8 @@ module.exports = function(app) {
         });
     }else{
       db[`${table}`].findAll({}).then(function(results){
-        // res.render("admin", { result: results });
-        res.json(results);
+        res.render("admin", { "item": results[0], "table": results });
+
       });
     }
   });

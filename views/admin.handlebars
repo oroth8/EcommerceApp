@@ -1,0 +1,27 @@
+
+
+<table style="border: 1px solid black;">
+    <tr>
+        {{#each item}}
+        {{#each this}}
+        <th style="border: 1px solid black;">
+            {{@key}}
+        </th >
+        {{/each}}
+        {{/each}}
+    </tr>
+
+        {{#each table}}
+    <tr>
+ 
+        {{#each this}}
+        {{#each this}}
+            <td style="border: 1px solid black;">
+             {{this}}
+            </td>
+        {{/each}}
+        {{/each}}
+        
+    </tr>
+        {{/each}}
+</table>    
