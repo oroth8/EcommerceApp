@@ -11,9 +11,9 @@ module.exports = function(app) {
     console.log(req.params);
     let table=req.params.table;
     if(req.params.category){
-      let category=req.params.category;
+      let category=req.params.category.split(',');
       db[`${table}`].findAll({
-        attributes: [category],
+        attributes: category,
         }).then(function(results){
           res.json(results);
         });
@@ -35,6 +35,23 @@ module.exports = function(app) {
       });
   
     });
+
+    app.put("/admin/:table",function(req,res){
+      let table=req.params.table;
+      db[`${table}`].update(
+        req.body, {
+        where: {
+          id: req.body.id
+        }
+      })
+        .then(function() {
+          res.json({ value: true});
+        });
+  
+    });
+
+
+    
 
 
   app.get("*", function(req, res) {
