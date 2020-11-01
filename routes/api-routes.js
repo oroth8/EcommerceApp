@@ -1,11 +1,44 @@
 var db = require("../models");
+const router = express.Router();
+const Product = require("../models/product");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 // Routes
+// Get product list, render handlebars products page
+router.get('/', (req,res)=> 
+Product.findAll()
+.then(products => {
+    res.render('products', {
+        products
+    });
+}).catch(err=>console.log(err)));
+
+// Display page routes via handlebar renders
+router.get('/add', (req,res)=> res.render('add'));
+
+
+// Insert into table
+Product.create({
+  brand,
+  name,
+  category,
+  subCategory,
+  price,
+  image_URLs
+}).then(gig => res.redirect('/products')).catch(err=>console.log(err));
+
+// Search for products
+router.get('/search', (req,res)=>{
+  let {term} = req.query;
+  // lower case
+  term = term.toLowerCase();
+
+  Product.findAll({where: {technologies: { [Op.like]: '%'+term+'%'}}});
+ 
+});
 // =============================================================
 module.exports = function(app) {
-
-
-
 
   // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
   app.get("/admin/:table/:category?", function(req,res){
