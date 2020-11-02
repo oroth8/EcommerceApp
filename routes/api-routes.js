@@ -8,7 +8,28 @@ module.exports = function(app) {
     res.render("adminhome",{});
   });
 
+  app.get("/admin/:table/add", function(req,res){
+    let table=req.params.table;
+  db[`${table}`].findAll({
+    where: {
+      id: 1
+    }
+  }).then(function(results){
+    let item=(results[0].dataValues);
+    res.render("adminadd", { "item": item});
+  });
+  });
 
+  app.post("/admin/:table/add", function(req,res){
+    let table=req.params.table;
+    db[`${table}`].create(
+      req.body
+    ).then(function() {
+
+        res.json({value: true});
+      });
+
+  });
 
   // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
   app.get("/admin/:table/:category?", function(req,res){
@@ -41,6 +62,8 @@ module.exports = function(app) {
       });
     }
   });
+
+
 
   app.get("/admin/:table/change/byId/:id", function(req,res){
     let table=req.params.table;
@@ -106,43 +129,6 @@ module.exports = function(app) {
 
   });
 
-  // Admin post route, will create new table entry.  
-    app.post("/admin/:table", function(req,res){
-      let table=req.params.table;
-    db[`${table}`].create(
-      req.body
-    ).then(function() {
-        // We have access to the new todo as an argument inside of the callback function
-        res.json({value: true});
-      });
-  
-    });
-
-  // Admin post route, will create new table entry.  
-  app.post("/admin/:table", function(req,res){
-    let table=req.params.table;
-  db[`${table}`].create(
-    req.body
-  ).then(function() {
-      // We have access to the new todo as an argument inside of the callback function
-      res.json({value: true});
-    });
-
-  });
-
-    app.put("/admin/:table",function(req,res){
-      let table=req.params.table;
-      db[`${table}`].update(
-        req.body, {
-        where: {
-          id: req.body.id
-        }
-      })
-        .then(function() {
-          res.json({ value: true});
-        });
-  
-    });
 
 
     
