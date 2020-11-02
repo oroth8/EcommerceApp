@@ -1,8 +1,10 @@
+// Sends back to main product view with options.
 $("#back-to-product").on("click",function(e){
     e.preventDefault();
     window.open(`/admin/Product/`);
 });
 
+// Takes in input from user and sends to server to submit change in database.
 $(".change-submit").on("click",function(e){
     e.preventDefault();
     let cat=this.dataset.cat;

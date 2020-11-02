@@ -1,5 +1,7 @@
+{{!-- The container with all information in it. --}}
 <div class="container">
 
+{{!-- We create a table, the first row will display the keys of the objects in the given table. --}}
 <table style="border: 1px solid black;">
     <tr style="border: 1px solid black;">
         {{#each item}}
@@ -9,7 +11,7 @@
         {{/each}}
 
     </tr>
-    
+    {{!-- This row will give the input boxes that will be filled in. --}}
 <tr>
 
         {{#each item}}
@@ -27,6 +29,7 @@
 </tr>      
 </table>   
 
+{{!-- The submit button will submit the new information to the database and the back to all products button will send the user back to the view of all products with more options, this is so they can verify the new product was added. --}}
 <div class="row">
 <div class="col-auto mr-auto ">
 <button type="button" class="btn btn-primary mt-4" id="add-submit">Submit</button>
@@ -37,5 +40,6 @@
 </div>
 </div>
 
+{{!-- Links to jquery and the js for this page. --}}
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="/assets/js/adminadd.js"></script>
