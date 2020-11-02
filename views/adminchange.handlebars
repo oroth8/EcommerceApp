@@ -1,0 +1,63 @@
+
+<div class="container">
+
+<table style="border: 1px solid black;">
+    <tr style="border: 1px solid black;">
+        {{#each item}}
+        <th style="border: 1px solid black;">
+            {{@key}}
+        </th >
+        {{/each}}
+        <th style="border: 1px solid black;">
+            New Value
+        </th>
+    </tr>
+
+        {{#each table}}
+    <tr style="border: 1px solid black;">
+        {{#each this}}
+            <td style="border: 1px solid black;">
+             {{this}}
+            </td>
+        {{/each}}   
+        <td style="border: 1px solid black;">
+            <form>
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <label class="sr-only" for="inlineFormInput">Name</label>
+      <input type="text" class="form-control mb-2" id="{{this.id}}-input">
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary mb-2 change-submit" data-id="{{this.id}}">Submit</button>
+    </div>
+  </div>
+</form>  
+</td>
+    </tr>
+        {{/each}}
+</table>   
+
+
+<button type="button" class="btn btn-primary m-4" id="back-to-product">Back to All Products</button>
+</div>
+
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script>
+        $(".change-submit").on("click",function(e){
+            e.preventDefault(); 
+            let value=$(`#${this.dataset.id}-input`).val();
+            let body={
+                "id": this.dataset.id,
+                "value": value
+                };     
+           $.post(window.location.href, body).done(function(){
+               location.reload();
+           }); 
+ 
+             });
+        
+        $("#back-to-product").on("click",function(e){
+        e.preventDefault();
+        window.open(`/admin/Product/`);
+    });
+    </script>
