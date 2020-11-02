@@ -2,7 +2,7 @@
   "name": "EcommerceApp",
   "version": "1.0.0",
   "description": "Project 2 repo (REPO name will change when project is assigned.",
-  "main": "sever.js",
+  "main": "./server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,10 +18,15 @@
   },
   "homepage": "https://github.com/oroth8/EcommerceApp#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
+    "express-session": "^1.17.1",
     "handlebars": "^4.7.6",
     "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "sequelize": "^6.3.5"
   }
 }
