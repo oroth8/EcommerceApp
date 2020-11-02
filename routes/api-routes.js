@@ -144,6 +144,6 @@ module.exports = function(app) {
 
 
   app.get("/", function(req, res) {
-    res.render("index", {data:"Hello World!"})
+    res.render('landing', {layout: 'main'})
   });
 }
