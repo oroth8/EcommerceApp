@@ -53,8 +53,9 @@ module.exports = function(app) {
 
   app.get("/admin/:table/change/:category", function(req,res){
     let table=req.params.table;
-    let category=["id"]
-    category.push(req.params.category);
+    let category=["id"];
+    let newCategory=req.params.category;
+    category.push(newCategory);
       db[`${table}`].findAll({
         attributes: category,
         }).then(function(results){
@@ -63,9 +64,29 @@ module.exports = function(app) {
           for(let i=0; i < results.length; i++){
             newTable.push(results[i].dataValues);
           }
-          res.render("adminchange", { "item": item, "table": newTable });
+          res.render("adminchange", { "item": item, "table": newTable});
         });
   });
+
+
+  app.post("/admin/:table/change/:category", function(req,res){
+    let table=req.params.table;
+    let category=req.params.category;
+    let body={};
+    body[category]=req.body.value;
+    db[`${table}`].update(
+      body, {
+      where: {
+        id: req.body.id
+      }
+    })
+      .then(function() {
+        res.json({ value: true});
+      });
+
+  });
+
+
 
   // Admin post route, will create new table entry.  
     app.post("/admin/:table", function(req,res){
