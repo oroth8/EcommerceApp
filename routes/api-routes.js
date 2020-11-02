@@ -151,6 +151,6 @@ module.exports = function(app) {
 
   //  Place holder for home page.
   app.get("/", function(req, res) {
-    res.render("index", {data:"Hello World!"})
+    res.render('landing', {layout: 'main'})
   });
 }
