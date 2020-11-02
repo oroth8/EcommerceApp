@@ -51,8 +51,9 @@ module.exports = function(app) {
 
 // Send the user to the admin home page.
   app.get("/admin", function(req,res){
-    if (req.user) {
-        res.render("adminhome",{});
+    if (req.user) {        
+        if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+        res.render("adminhome",{accessGranted:accessGranted});
       }
       else res.render("login", {});
     });   
@@ -68,7 +69,9 @@ module.exports = function(app) {
             }
             }).then(function(results){
                 let item=(results[0].dataValues);
-                res.render("adminadd", { "item": item});
+                
+                if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+                res.render("adminadd", { "item": item, accessGranted:accessGranted});
             });
         }else res.render("login", {});
     }); 
