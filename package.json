@@ -2,7 +2,7 @@
   "name": "EcommerceApp",
   "version": "1.0.0",
   "description": "Project 2 repo (REPO name will change when project is assigned.",
-  "main": "sever.js",
+  "main": "./server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

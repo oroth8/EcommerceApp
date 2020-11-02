@@ -6,9 +6,11 @@ const path=require("path");
 module.exports = function(app) {
 
     app.get("/", (req, res) => {
+        console.log("At the slash!");
+        console.log(req.user);
         // If the user already has an account send them to the members page
         if (req.user) {
-          res.redirect("/members");
+          res.render("index", {data:"Hello World!"});
         }
         res.sendFile(path.join(__dirname, "../public/signup.html"));
       });

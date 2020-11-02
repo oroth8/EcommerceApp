@@ -2,13 +2,23 @@
 
 // Dependencies
 // =============================================================
-var express = require("express");
+var express = require("express")
+const passport = require("./config/passport");;
 
-const session = require("express-session");
 // Sets up the Express App
 // =============================================================
 var app = express();
+// Static directory to be served
+app.use(express.static("public"));
+const session = require("express-session");
 var PORT = process.env.PORT || 8080;
+app.use(
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 let db = require("./models")
 
@@ -16,12 +26,9 @@ let db = require("./models")
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Static directory to be served
-app.use(express.static("public"));
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
-const passport = require("./config/passport");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 // Routes
@@ -32,9 +39,7 @@ require("./routes/html-routes.js")(app);
 
 // We need to use sessions to keep track of our user's login status
 // Double-check what all this biz means, esp. the "secret" there!
-app.use(
-  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
-);
+
 
 app.use(passport.initialize());
 app.use(passport.session());
