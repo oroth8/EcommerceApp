@@ -1,10 +1,10 @@
 
 <div class="container">
 
-<table style="border: 1px solid black;">
+<table>
     <tr>
         {{#each item}}
-        <th style="border: 1px solid black;">
+        <th >
             {{@key}}
         </th >
         {{/each}}
@@ -13,7 +13,7 @@
         {{#each table}}
     <tr>
         {{#each this}}
-            <td style="border: 1px solid black;">
+            <td>
              {{this}}
             </td>
         {{/each}}     
@@ -29,7 +29,7 @@
 
 <select id="change-by-category"> 
         {{#each item}}
-        <option value={{@key}} style="border: 1px solid black;">
+        <option value={{@key}} >
             {{@key}}
         </option >
         {{/each}}
@@ -54,15 +54,4 @@
 </div>
 
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script>
-    $("#change-by-category").on("change",function(e){
-        e.preventDefault();
-        let category=this.value;
-        window.open(`/admin/Product/change/${category}`);
-    });
-        $("#id-change-submit").on("click",function(e){
-        e.preventDefault();
-        let id=$("#change-by-id").val();
-        window.open(`/admin/Product/change/byId/${id}`);
-    });
-    </script>
+        <script src="/assets/js/admin.js"></script>
