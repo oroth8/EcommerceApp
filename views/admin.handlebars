@@ -1,9 +1,10 @@
 
+<div class="container">
 
-<table style="border: 1px solid black;">
+<table>
     <tr>
         {{#each item}}
-        <th style="border: 1px solid black;">
+        <th >
             {{@key}}
         </th >
         {{/each}}
@@ -12,10 +13,45 @@
         {{#each table}}
     <tr>
         {{#each this}}
-            <td style="border: 1px solid black;">
+            <td>
              {{this}}
             </td>
         {{/each}}     
     </tr>
         {{/each}}
-</table>    
+</table>   
+
+<div class="row">
+
+
+<form class="form col-6">
+<h4> Change by Category </h4>
+
+<select id="change-by-category"> 
+        {{#each item}}
+        <option value={{@key}} >
+            {{@key}}
+        </option >
+        {{/each}}
+</select>
+</form>
+
+<form class="col-6">
+    <h4>Change by ID</h4>
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <label class="sr-only" for="change-by-id">Name</label>
+      <input type="text" class="form-control mb-2" id="change-by-id">
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary mb-2" id="id-change-submit">Submit</button>
+    </div>
+  </div>
+</form>
+
+</div>
+
+</div>
+
+		<script src="https://code.jquery.com/jquery.js"></script>
+        <script src="/assets/js/admin.js"></script>
