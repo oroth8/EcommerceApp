@@ -12,7 +12,7 @@ module.exports = function(app) {
         if (req.user) {
           res.render("index", {data:"Hello World!"});
         }
-        res.render("login");
+        else res.render("login");
       });
       
     app.get("/login", (req, res) => {
@@ -21,7 +21,7 @@ module.exports = function(app) {
             console.log("------------ Logged in");
           res.render("index",{data:"WWOOOOOO"});
         }
-        res.render("login");
+        else res.render("login", {});
       });
 
   // Here we've add our isAuthenticated middleware to this route.
