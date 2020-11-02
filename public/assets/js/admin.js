@@ -8,3 +8,6 @@ $("#change-by-category").on("change",function(e){
     let id=$("#change-by-id").val();
     window.open(`/admin/Product/change/byId/${id}`);
 });
+$("#add-product").on("click",function(e){
+    window.open("/admin/Product/add");
+})
