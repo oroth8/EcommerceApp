@@ -9,10 +9,13 @@ module.exports = function(app) {
 
   // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
   app.get("/admin/:table/:category?", function(req,res){
-    console.log(req.params);
     let table=req.params.table;
     if(req.params.category){
-      let category=req.params.category.split(',');
+      let category=["id"];
+      let categories=req.params.category.split(',');
+      for(let i=0; i< categories.length; i++){
+        category.push(categories[i]);
+      }
       db[`${table}`].findAll({
         attributes: category,
         }).then(function(results){
@@ -34,6 +37,34 @@ module.exports = function(app) {
 
       });
     }
+  });
+
+  app.get("/admin/:table/change/byId/:id", function(req,res){
+    let table=req.params.table;
+  db[`${table}`].findAll({
+    where: {
+      id: req.params.id
+    }
+  }).then(function(results){
+    let item=(results[0].dataValues);
+    res.render("adminchangeid", { "item": item});
+  });
+  });
+
+  app.get("/admin/:table/change/:category", function(req,res){
+    let table=req.params.table;
+    let category=["id"]
+    category.push(req.params.category);
+      db[`${table}`].findAll({
+        attributes: category,
+        }).then(function(results){
+          let item=(results[0].dataValues);
+          let newTable=[];
+          for(let i=0; i < results.length; i++){
+            newTable.push(results[i].dataValues);
+          }
+          res.render("adminchange", { "item": item, "table": newTable });
+        });
   });
 
   // Admin post route, will create new table entry.  
