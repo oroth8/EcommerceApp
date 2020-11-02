@@ -52,6 +52,25 @@ module.exports = function(app) {
     res.render("adminchangeid", { "item": item});
   });
   });
+
+  app.post("/admin/:table/change/byId/:id", function(req,res){
+    let table=req.params.table;
+    let id=req.params.id;
+    let value=req.body.value;
+    let cat=req.body.cat;
+    let body={ "id": id };
+    body[cat]=value;
+    db[`${table}`].update(
+      body, {
+      where: {
+        "id": id
+      }
+    })
+      .then(function() {
+        res.json({ "value": true});
+      });
+  });
+
   app.get("/admin/:table/change/:category", function(req,res){
     let table=req.params.table;
     let category=["id"];
