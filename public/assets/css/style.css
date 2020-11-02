@@ -1,7 +1,3 @@
 table, th, td {
     border: 1px solid black;
   }
-
-  .new-value{
-    display: none;
-  }
