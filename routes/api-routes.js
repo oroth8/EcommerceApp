@@ -6,24 +6,6 @@ const passport = require("../config/passport");
 module.exports = function(app) {
 
 
-  // Send the user to the admin home page.
-  app.get("/admin", function(req,res){
-    res.render("adminhome",{});
-  });
-
-  // Sends the user to adminadd page where they can add a product to the database.
-  app.get("/admin/:table/add", function(req,res){
-    let table=req.params.table;
-  db[`${table}`].findAll({
-    where: {
-      id: 1
-    }
-  }).then(function(results){
-    let item=(results[0].dataValues);
-    res.render("adminadd", { "item": item});
-  });
-  });
-
     // Takes the information from the user and adds it to the table in the database.
   app.post("/admin/:table/add", function(req,res){
     let table=req.params.table;
@@ -191,8 +173,7 @@ module.exports = function(app) {
   app.post("/api/signup", (req, res) => {
     db.User.create({
       username: req.body.username,
-      password: req.body.password,
-      accessLevel: "0"
+      password: req.body.password
     })
       .then(() => {
         res.redirect(307, "/api/login");
