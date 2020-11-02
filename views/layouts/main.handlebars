@@ -51,7 +51,9 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#">Something else here</a>
       </div>
+	  {{#if accessGranted}}
     <a class="py-2 d-none d-md-inline-block" href="/admin">Admin</a>
+	{{/if}}
     <a class="py-2 d-none d-md-inline-block" href="#">Brands</a>
     <a class="py-2 d-none d-md-inline-block" href="#">My Account</a>
     <!-- <a class="py-2 d-none d-md-inline-block" href="#">Shopping Cart</a> -->
