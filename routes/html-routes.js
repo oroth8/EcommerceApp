@@ -10,7 +10,7 @@ module.exports = function(app) {
         console.log(req.user);
         // If the user already has an account send them to the members page
         if (req.user) {
-          res.render("index", {data:"Hello World!"});
+            res.render("landing",{layout:"main"});
         }
         else res.render("login");
       });
@@ -19,7 +19,7 @@ module.exports = function(app) {
         // If the user already has an account send them to the members page
         if (req.user) {
             console.log("------------ Logged in");
-          res.render("index",{data:"WWOOOOOO"});
+          res.render("landing",{layout:"main"});
         }
         else res.render("login", {});
       });
@@ -31,10 +31,5 @@ module.exports = function(app) {
   });
 
 
-
-
-    app.get("*", function(req, res) {
-        res.render("index", {data:"Hello World!"})
-    });
 
 };
