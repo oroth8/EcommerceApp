@@ -4,7 +4,9 @@ var db = require("../models");
 // =============================================================
 module.exports = function(app) {
 
-
+  app.get("/admin", function(req,res){
+    res.render("adminhome",{});
+  });
 
 
   // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
