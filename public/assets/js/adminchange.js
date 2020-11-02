@@ -1,3 +1,4 @@
+// Takes in user input and sends it to server to change information for the item.
 $(".change-submit").on("click",function(e){
     e.preventDefault(); 
     let value=$(`#${this.dataset.id}-input`).val();
@@ -10,7 +11,7 @@ $(".change-submit").on("click",function(e){
    }); 
 
      });
-
+// Sends back to main product view.
 $("#back-to-product").on("click",function(e){
 e.preventDefault();
 window.open(`/admin/Product/`);

@@ -1,7 +1,8 @@
-
+{{!-- The change by category page. --}}
 <div class="container">
 
 <table >
+    {{!-- Loops through one item and displays the keys to make table headers. --}}
     <tr >
         {{#each item}}
         <th >
@@ -12,7 +13,7 @@
             New Value
         </th>
     </tr>
-
+{{!-- loops through each item, making a row for each item and column for each key with the values given in the table. Further gives an input column at the end so the user can change information.--}}
         {{#each table}}
     <tr >
         {{#each this}}
@@ -37,9 +38,9 @@
         {{/each}}
 </table>   
 
-
+{{!-- returns user to back to product view with options to do more. --}}
 <button type="button" class="btn btn-primary m-4" id="back-to-product">Back to All Products</button>
 </div>
-
+    {{!-- links to jquery and the js for this page. --}}
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="/assets/js/adminchange.js"> </script>
