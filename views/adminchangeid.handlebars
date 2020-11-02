@@ -1,29 +1,31 @@
-<div class="container">
+{{!-- Can change by id --}}
 
-<table style="border: 1px solid black;">
-    <tr style="border: 1px solid black;">
+<div class="container">
+{{!-- Loops through the item to display the keys as headers. --}}
+<table >
+    <tr >
         {{#each item}}
-        <th style="border: 1px solid black;">
+        <th >
             {{@key}}
         </th >
         {{/each}}
 
     </tr>
-
-    <tr style="border: 1px solid black;">
+{{!-- displays current views. --}}
+    <tr >
         {{#each item}}
-            <td style="border: 1px solid black;">
+            <td >
              {{this}}
             </td>
         {{/each}}   
     </tr>
     
 
-
+{{!-- creates a row with the input forms. --}}
 <tr>
 
         {{#each item}}
-            <td style="border: 1px solid black;">
+            <td >
 <form>
   <div class="form-row align-items-center">
     <div class="col-auto">
@@ -40,7 +42,7 @@
 </tr>      
 </table>   
 
-
+{{!-- Sends user back to main product view with options --}}
 <button type="button" class="btn btn-primary m-4" id="back-to-product">Back to All Product</button>
 </div>
 
