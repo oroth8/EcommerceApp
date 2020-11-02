@@ -1,8 +1,10 @@
+//  Sends back to main product view.
 $("#back-to-product").on("click",function(e){
     e.preventDefault();
     window.open(`/admin/Product/`);
 });
 
+// Takes in info and sends it to server to create new item.
 $("#add-submit").on("click",function(e){
     e.preventDefault();
     let body={};

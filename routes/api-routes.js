@@ -5,10 +5,13 @@ const passport = require("../config/passport");
 // =============================================================
 module.exports = function(app) {
 
+
+  // Send the user to the admin home page.
   app.get("/admin", function(req,res){
     res.render("adminhome",{});
   });
 
+  // Sends the user to adminadd page where they can add a product to the database.
   app.get("/admin/:table/add", function(req,res){
     let table=req.params.table;
   db[`${table}`].findAll({
@@ -21,6 +24,7 @@ module.exports = function(app) {
   });
   });
 
+    // Takes the information from the user and adds it to the table in the database.
   app.post("/admin/:table/add", function(req,res){
     let table=req.params.table;
     db[`${table}`].create(
@@ -65,7 +69,7 @@ module.exports = function(app) {
   });
 
 
-
+// Sends the user to the page that allows for changes on one id product.
   app.get("/admin/:table/change/byId/:id", function(req,res){
     let table=req.params.table;
   db[`${table}`].findAll({
@@ -78,6 +82,7 @@ module.exports = function(app) {
   });
   });
 
+  // Updates the table for the current product being viewed.
   app.post("/admin/:table/change/byId/:id", function(req,res){
     let table=req.params.table;
     let id=req.params.id;
@@ -96,6 +101,7 @@ module.exports = function(app) {
       });
   });
 
+  // Sends the user to a page where all values for a given category can be changed.
   app.get("/admin/:table/change/:category", function(req,res){
     let table=req.params.table;
     let category=["id"];
@@ -113,6 +119,7 @@ module.exports = function(app) {
         });
   });
 
+  //Takes the users input and updates the table in the database.
   app.post("/admin/:table/change/:category", function(req,res){
     let table=req.params.table;
     let category=req.params.category;

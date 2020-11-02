@@ -1,7 +1,9 @@
 
+{{!-- This will create a container for the information that will be displayed to the admin when viewing a table. --}}
 <div class="container">
-
+{{!-- Creates the table --}}
 <table>
+    {{!-- We create the header row which displayes the keys of the object from the table. --}}
     <tr>
         {{#each item}}
         <th >
@@ -9,7 +11,7 @@
         </th >
         {{/each}}
     </tr>
-
+    {{!-- We loop through each item, creating a row for each item, then a column for each key. --}}
         {{#each table}}
     <tr>
         {{#each this}}
@@ -21,9 +23,10 @@
         {{/each}}
 </table>   
 
+{{!-- Provide buttons which link to different pages based on what the admin wants to accomplish. --}}
 <div class="row">
 
-
+{{!-- Sends the user to the change by category page --}}
 <form class="col-4">
 <h4> Change by Category </h4>
 
@@ -36,6 +39,7 @@
 </select>
 </form>
 
+{{!-- Sends the user to the change by id page. --}}
 <form class="col-4">
     <h4>Change by ID</h4>
   <div class="form-row align-items-center">
@@ -49,6 +53,7 @@
   </div>
 </form>
 
+{{!-- Sends the user to the add product page. --}}
 <form class="col-4">
 <h4> Add Product </h4>
 
