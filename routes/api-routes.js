@@ -1,3 +1,4 @@
+const controller = require("../controller/controller");
 var db = require("../models");
 // Routes
 // =============================================================
@@ -129,7 +130,16 @@ module.exports = function(app) {
   });
 
 
-
+  app.get("/api/products", function(req, res) {
+    db.Product.findAll({}).then(function (dbProductData) {
+      let products = [];
+      for (let index = 0; index < dbProductData.length; index++) {
+        products.push(dbProductData[index].dataValues);
+      };
+      res.json(products);
+    })
+  
+  })
     
 
 
