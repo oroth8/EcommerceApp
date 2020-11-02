@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="border: 1px solid black;">
+    <tr style="border: 1px solid black;">
+        {{#each item}}
+        <th style="border: 1px solid black;">
+            {{@key}}
+        </th >
+        {{/each}}
+
+    </tr>
+    
+<tr>
+
+        {{#each item}}
+            <td style="border: 1px solid black;">
+<form>
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <label class="sr-only" for="id-{{@key}}">Name</label>
+      <input type="text" class="form-control mb-2" id="id-{{@key}}">
+    </div>
+  </div>
+</form> 
+            </td>
+        {{/each}}   
+</tr>      
+</table>   
+
+<div class="row">
+<div class="col-auto mr-auto ">
+<button type="button" class="btn btn-primary mt-4" id="add-submit">Submit</button>
+</div>
+<div class="col-auto ml-auto">
+<button type="button" class="btn btn-primary mt-4 " id="back-to-product">Back to All Product</button>
+</div>
+</div>
+</div>
+
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="/assets/js/adminadd.js"></script>
