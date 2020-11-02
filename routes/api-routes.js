@@ -49,11 +49,21 @@ module.exports = function(app) {
       db[`${table}`].findAll({
         attributes: category,
         }).then(function(results){
-          res.json(results);
+          let item=(results[0].dataValues);
+          let newTable=[];
+          for(let i=0; i < results.length; i++){
+            newTable.push(results[i].dataValues);
+          }
+          res.render("admin", { "item": item, "table": newTable });
         });
     }else{
       db[`${table}`].findAll({}).then(function(results){
-        res.render("admin", { "item": results[0], "table": results });
+        let item=(results[0].dataValues);
+        let newTable=[];
+        for(let i=0; i < results.length; i++){
+          newTable.push(results[i].dataValues);
+        }
+        res.render("admin", { "item": item, "table": newTable });
 
       });
     }
