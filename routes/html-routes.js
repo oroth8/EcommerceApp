@@ -47,6 +47,47 @@ module.exports = function(app) {
   app.get("/members", isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
+
+
+
+  // Display products on productlist
+  app.get('/shop', (req,res)=> 
+  db.Product.findAll()
+  .then(products => {
+      res.render('productlist', {layout: "main",
+          products,
+      });
+  }).catch(err=>console.log(err)));
+  
+  app.get("/shop/:subCategory", (req, res) => {
+    db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+      let category = req.params.subCategory;
+      db.Product.findAll({
+        where: {
+          subCategory: category,
+        },
+      }).then((products) => {
+        res.render("productlist", { layout: "main", allProducts, products });
+      });
+    });
+  
+  });
+      
+  app.get('/shop/product/:id', (req,res) => 
+  db.Product.findAll(
+    {
+    where: {
+      id: req.params.id
+    }
+  }).then(result => {
+              console.log(result);
+              let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
+              console.log( id, brand, name);
+            res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
+  }).catch(err=>console.log(err)));
+
+
+
 // ------------------------------------------
 // ----              ADMIN               ----
 // ------------------------------------------
@@ -64,10 +105,8 @@ module.exports = function(app) {
     });   
 
     app.get("/admin/Product", (req,res)=>{
-   //   if (req.user) {        
-  //        if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-        if(1){
-let accessGranted=10;
+     if (req.user) {        
+         if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
         db.Product.findAll({}).then((data)=>{
           console.log(data);
           res.render("adminProduct",{accessGranted:accessGranted, data:data})
