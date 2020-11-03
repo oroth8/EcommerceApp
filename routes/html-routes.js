@@ -105,6 +105,23 @@ module.exports = function(app) {
       else res.render("login", {});
     });   
 
+    // Sends the user to adminadd page where they can add a product to the database.
+    app.get("/admin/:table/add", function(req,res){
+      if(req.user){
+          let table=req.params.table;
+          db[`${table}`].findAll({
+              where: {
+              id: 1
+          }
+          }).then(function(results){
+              let item=(results[0].dataValues);
+              
+              if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+              res.render("adminadd", { "item": item, accessGranted:accessGranted});
+          });
+      }else res.render("login", {});
+  }); 
+  
     app.get("/admin/Product", (req,res)=>{
      if (req.user) {        
          if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
@@ -149,22 +166,6 @@ module.exports = function(app) {
       }
     });
 
-    // Sends the user to adminadd page where they can add a product to the database.
-    app.get("/admin/:table/add", function(req,res){
-        if(req.user){
-            let table=req.params.table;
-            db[`${table}`].findAll({
-                where: {
-                id: 1
-            }
-            }).then(function(results){
-                let item=(results[0].dataValues);
-                
-                if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-                res.render("adminadd", { "item": item, accessGranted:accessGranted});
-            });
-        }else res.render("login", {});
-    }); 
 
     app.get("/cart", function(req,res){
       res.render("cart",{});

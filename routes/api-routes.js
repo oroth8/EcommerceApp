@@ -124,7 +124,16 @@ module.exports = function(app) {
       });
     }
   });
+  app.post("/admin/:table/add", function(req,res){
+    let table=req.params.table;
+    db[`${table}`].create(
+      req.body
+    ).then(function() {
 
+        res.json({value: true});
+      });
+
+  });
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
