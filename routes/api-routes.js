@@ -128,8 +128,16 @@ module.exports = function(app) {
       };
       res.json(products);
     })
-  
   })
+
+  // Display products on productlist
+app.get('/shop', (req,res)=> 
+db.Product.findAll()
+.then(products => {
+    res.render('productlist', {layout: "main",
+        products,
+    });
+}).catch(err=>console.log(err)));
     
 
 
