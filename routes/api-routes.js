@@ -150,9 +150,20 @@ app.get("/shop/:subCategory", (req, res) => {
       res.render("productlist", { layout: "main", allProducts, products });
     });
   });
-
 });
-    
+
+app.get("/shop/product/:id", (req, res) => {
+  db.Product.findAll({ group: "subCategory" }).then(allProducts => {
+    let id = req.params.id;
+    db.Product.findAll({
+      where: {
+        id: id,
+      }
+    }).then(product => {
+      res.render("product", {layout: "main", allProducts, product})
+    })
+  })
+})
 
 
 // ------------------------------------------
