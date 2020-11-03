@@ -31,6 +31,10 @@ table, th, td {
     text-decoration: none;
   }
   
+#cart-count{
+  color: white;
+}
+
   /*
    * Dummy devices (replace them with your own or something else entirely!)
    */
