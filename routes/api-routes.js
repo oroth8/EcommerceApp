@@ -139,6 +139,18 @@ db.Product.findAll()
     });
 }).catch(err=>console.log(err)));
     
+app.get('/shop/product/:id', (req,res) => 
+db.Product.findAll(
+  {
+  where: {
+    id: req.params.id
+  }
+}).then(result => {
+            console.log(result);
+            let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
+            console.log( id, brand, name);
+          res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
+}).catch(err=>console.log(err)));
 
 
 // ------------------------------------------
