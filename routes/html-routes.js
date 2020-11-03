@@ -3,6 +3,7 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const { mainModule } = require("process");
 
 // Routes
 // =============================================================
@@ -55,12 +56,15 @@ module.exports = function(app) {
 
   // Display products on productlist
   app.get('/shop', (req,res)=> 
-  db.Product.findAll()
+  db.Product.findAll({group: "subCategory"}).then(allProducts => {
+    db.Product.findAll()
   .then(products => {
-      res.render('productlist', {layout: "main",
+      res.render('productlist', {layout: "main", allProducts,
           products,
       });
-  }).catch(err=>console.log(err)));
+  }).catch(err=>console.log(err))
+  })
+  );
   
   app.get("/shop/:subCategory", (req, res) => {
     db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
@@ -76,18 +80,21 @@ module.exports = function(app) {
   
   });
       
-  app.get('/shop/product/:id', (req,res) => 
-  db.Product.findAll(
-    {
-    where: {
-      id: req.params.id
-    }
-  }).then(result => {
-              console.log(result);
-              let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
-              console.log( id, brand, name);
-            res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
-  }).catch(err=>console.log(err)));
+  app.get('/shop/product/:id', (req,res) => {
+    db.Product.findAll({group: "subCategory"}).then(allProducts => {
+      db.Product.findAll(
+        {
+        where: {
+          id: req.params.id
+        }
+      }).then(result => {
+                  console.log(result);
+                  let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
+                  console.log( id, brand, name);
+                res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts});
+      }).catch(err=>console.log(err))});
+    })
+  
 
 // Searchbar
 // search for gigs
@@ -181,5 +188,26 @@ app.get('/search', (req,res)=>{
             });
         }else res.render("login", {});
     }); 
+
+    app.get("/cart", function(req,res){
+      res.render("cart",{});
+    });
+
+    app.post("/cart",function(req,res){
+      let array=[];
+      if(req.body.limitCart){
+      for(let i=0; i< req.body.limitCart.length; i++){
+        array.push(Number(req.body.limitCart[i]));
+      }
+      db.Product.findAll({
+        where: {
+          id: array
+        }
+      }).then(function(response){
+        res.json(response);
+      });}else{
+      res.render("cart",{});
+      }
+    });
 
 };
