@@ -1,0 +1,19 @@
+{{#each product}}
+<div class="card text-center">
+  <div class="card-header">
+    {{dataValues.subCategory}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{dataValues.brand}}</h5>
+    <p class="card-text">{{dataValues.name}}</p>
+
+    <img src="{{dataValues.image_URLs}}">
+
+    <p class="card-text">Price: ${{dataValues.price}}</p>
+    <a href="#" class="btn btn-primary">Add to Cart</a>
+  </div>
+  <div class="card-footer text-muted">
+    Last Updated: {{dataValues.updatedAt}}
+  </div>
+</div>
+{{/each}}
