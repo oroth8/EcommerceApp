@@ -6,50 +6,17 @@ const passport = require("../config/passport");
 module.exports = function(app) {
 
 
-    // Takes the information from the user and adds it to the table in the database.
-  app.post("/admin/:table/add", function(req,res){
-    let table=req.params.table;
-    db[`${table}`].create(
-      req.body
-    ).then(function() {
+  //   // Takes the information from the user and adds it to the table in the database.
+  // app.post("/admin/:table/add", function(req,res){
+  //   let table=req.params.table;
+  //   db[`${table}`].create(
+  //     req.body
+  //   ).then(function() {
 
-        res.json({value: true});
-      });
+  //       res.json({value: true});
+  //     });
 
-  });
-
-  // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
-  app.get("/admin/:table/:category?", function(req,res){
-    let table=req.params.table;
-    if(req.params.category){
-      let category=["id"];
-      let categories=req.params.category.split(',');
-      for(let i=0; i< categories.length; i++){
-        category.push(categories[i]);
-      }
-      db[`${table}`].findAll({
-        attributes: category,
-        }).then(function(results){
-          let item=(results[0].dataValues);
-          let newTable=[];
-          for(let i=0; i < results.length; i++){
-            newTable.push(results[i].dataValues);
-          }
-          res.render("admin", { "item": item, "table": newTable });
-        });
-    }else{
-      db[`${table}`].findAll({}).then(function(results){
-        let item=(results[0].dataValues);
-        let newTable=[];
-        for(let i=0; i < results.length; i++){
-          newTable.push(results[i].dataValues);
-        }
-        res.render("admin", { "item": item, "table": newTable });
-
-      });
-    }
-  });
-
+  // });
 
 // Sends the user to the page that allows for changes on one id product.
   app.get("/admin/:table/change/byId/:id", function(req,res){

@@ -57,7 +57,52 @@ module.exports = function(app) {
       }
       else res.render("login", {});
     });   
+
+    app.get("/admin/Product", (req,res)=>{
+   //   if (req.user) {        
+  //        if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+        if(1){
+let accessGranted=10;
+        db.Product.findAll({}).then((data)=>{
+          console.log(data);
+          res.render("adminProduct",{accessGranted:accessGranted, data:data})
+        });
+      }
+    });
+
+
+
+    // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
+    app.get("/admin/:table/:category?", function(req,res){
+      let table=req.params.table;
+      if(req.params.category){
+        let category=["id"];
+        let categories=req.params.category.split(',');
+        for(let i=0; i< categories.length; i++){
+          category.push(categories[i]);
+        }
+        db[`${table}`].findAll({
+          attributes: category,
+          }).then(function(results){
+            let item=(results[0].dataValues);
+            let newTable=[];
+            for(let i=0; i < results.length; i++){
+              newTable.push(results[i].dataValues);
+            }
+            res.render("admin", { "item": item, "table": newTable });
+          });
+      }else{
+        db[`${table}`].findAll({}).then(function(results){
+          let item=(results[0].dataValues);
+          let newTable=[];
+          for(let i=0; i < results.length; i++){
+            newTable.push(results[i].dataValues);
+          }
+          res.render("admin", { "item": item, "table": newTable });
   
+        });
+      }
+    });
 
     // Sends the user to adminadd page where they can add a product to the database.
     app.get("/admin/:table/add", function(req,res){
