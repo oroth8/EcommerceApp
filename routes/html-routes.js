@@ -1,7 +1,6 @@
 var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
-const { mainModule } = require("process");
 
 // Routes
 // =============================================================
@@ -129,7 +128,7 @@ module.exports = function(app) {
       }else res.render("login", {});
   }); 
 
-    app.get("/admin/Product", (req,res)=>{
+    app.get("/admin/:table", (req,res)=>{
       console.log("FIRST ONE");
      if (req.user) {        
          if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
@@ -138,10 +137,11 @@ module.exports = function(app) {
         });
       }
       else res.render("login");
+      
     });
 
     // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
-    app.get("/admin/:table/:category?", function(req,res){
+    app.get("/admin/:table/:category", function(req,res){
       console.log("Then t'OTHER");
       let table=req.params.table;
       if(req.params.category){
