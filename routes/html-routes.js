@@ -53,12 +53,15 @@ module.exports = function(app) {
 
   // Display products on productlist
   app.get('/shop', (req,res)=> 
-  db.Product.findAll()
+  db.Product.findAll({group: "subCategory"}).then(allProducts => {
+    db.Product.findAll()
   .then(products => {
-      res.render('productlist', {layout: "main",
+      res.render('productlist', {layout: "main", allProducts,
           products,
       });
-  }).catch(err=>console.log(err)));
+  }).catch(err=>console.log(err))
+  })
+  );
   
   app.get("/shop/:subCategory", (req, res) => {
     db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
@@ -74,18 +77,21 @@ module.exports = function(app) {
   
   });
       
-  app.get('/shop/product/:id', (req,res) => 
-  db.Product.findAll(
-    {
-    where: {
-      id: req.params.id
-    }
-  }).then(result => {
-              console.log(result);
-              let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
-              console.log( id, brand, name);
-            res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
-  }).catch(err=>console.log(err)));
+  app.get('/shop/product/:id', (req,res) => {
+    db.Product.findAll({group: "subCategory"}).then(allProducts => {
+      db.Product.findAll(
+        {
+        where: {
+          id: req.params.id
+        }
+      }).then(result => {
+                  console.log(result);
+                  let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
+                  console.log( id, brand, name);
+                res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts});
+      }).catch(err=>console.log(err))});
+    })
+  
 
 
 
