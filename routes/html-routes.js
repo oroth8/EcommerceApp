@@ -1,6 +1,8 @@
 var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 // Routes
 // =============================================================
@@ -50,6 +52,7 @@ module.exports = function(app) {
 
 
 
+
   // Display products on productlist
   app.get('/shop', (req,res)=> 
   db.Product.findAll()
@@ -86,6 +89,20 @@ module.exports = function(app) {
             res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
   }).catch(err=>console.log(err)));
 
+// Searchbar
+// search for gigs
+app.get('/search', (req,res)=>{
+  let {term} = req.query;
+  // lower case
+  term = term.toLowerCase()
+  db.Product.findAll({where: {subCategory: { [Op.like]: '%'+term+'%'}}})
+  .then(products => {
+    console.log(products);
+    res.render('productlist', {layout: "main",
+          products,
+      });
+});
+});
 
 
 // ------------------------------------------
