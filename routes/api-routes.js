@@ -5,64 +5,20 @@ const passport = require("../config/passport");
 // =============================================================
 module.exports = function(app) {
 
-
-    // Takes the information from the user and adds it to the table in the database.
-  app.post("/admin/:table/add", function(req,res){
-    let table=req.params.table;
-    db[`${table}`].create(
-      req.body
-    ).then(function() {
-
-        res.json({value: true});
-      });
-
-  });
-
-  // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
-  app.get("/admin/:table/:category?", function(req,res){
-    let table=req.params.table;
-    if(req.params.category){
-      let category=["id"];
-      let categories=req.params.category.split(',');
-      for(let i=0; i< categories.length; i++){
-        category.push(categories[i]);
-      }
-      db[`${table}`].findAll({
-        attributes: category,
-        }).then(function(results){
-          let item=(results[0].dataValues);
-          let newTable=[];
-          for(let i=0; i < results.length; i++){
-            newTable.push(results[i].dataValues);
-          }
-          res.render("admin", { "item": item, "table": newTable });
-        });
-    }else{
-      db[`${table}`].findAll({}).then(function(results){
-        let item=(results[0].dataValues);
-        let newTable=[];
-        for(let i=0; i < results.length; i++){
-          newTable.push(results[i].dataValues);
-        }
-        res.render("admin", { "item": item, "table": newTable });
-
-      });
-    }
-  });
-
-
 // Sends the user to the page that allows for changes on one id product.
   app.get("/admin/:table/change/byId/:id", function(req,res){
     let table=req.params.table;
-  db[`${table}`].findAll({
+    db[`${table}`].findAll({
     where: {
       id: req.params.id
     }
   }).then(function(results){
     let item=(results[0].dataValues);
-    res.render("adminchangeid", { "item": item});
+    if(req.user)
+      res.render("adminchangeid", { "item": item});
+    else res.render("/login", {});
   });
-  });
+});
 
   // Updates the table for the current product being viewed.
   app.post("/admin/:table/change/byId/:id", function(req,res){
@@ -97,7 +53,9 @@ module.exports = function(app) {
           for(let i=0; i < results.length; i++){
             newTable.push(results[i].dataValues);
           }
-          res.render("adminchange", { "item": item, "table": newTable});
+          if(req.user)
+            res.render("adminchange", { "item": item, "table": newTable});
+          else res.render("/login",{});
         });
   });
 
@@ -130,41 +88,7 @@ module.exports = function(app) {
     })
   })
 
-  // Display products on productlist
-app.get('/shop', (req,res)=> 
-db.Product.findAll()
-.then(products => {
-    res.render('productlist', {layout: "main",
-        products,
-    });
-}).catch(err=>console.log(err)));
 
-app.get("/shop/:subCategory", (req, res) => {
-  db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
-    let category = req.params.subCategory;
-    db.Product.findAll({
-      where: {
-        subCategory: category,
-      },
-    }).then((products) => {
-      res.render("productlist", { layout: "main", allProducts, products });
-    });
-  });
-
-});
-    
-app.get('/shop/product/:id', (req,res) => 
-db.Product.findAll(
-  {
-  where: {
-    id: req.params.id
-  }
-}).then(result => {
-            console.log(result);
-            let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
-            console.log( id, brand, name);
-          res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
-}).catch(err=>console.log(err)));
 
 
 // ------------------------------------------
