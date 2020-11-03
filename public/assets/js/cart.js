@@ -6,10 +6,17 @@ function viewCart(){
         newh.text("Your Cart");
         $("#cart-body").append(newh);
         let newUl=$("<ul>");
+        let count=[];
         if(results[0].name){
         for(let i=0; i< results.length; i++){
+            count.push(0);
+                for(let j=0; j<limitCart.length;j++){
+                    if(results[i].id==limitCart[j]){
+                        count[i]++;
+                    }
+                }
             let newLi=$("<li>");
-            newLi.html(`<img src="${results[i].img_URLs}" class="cart-img"> Name: ${results[i].name} Price: ${results[i].price} <button type="button" class="close" data-id="${results[i].id}" aria-label="Close">
+            newLi.html(`<img src="${results[i].img_URLs}" class="cart-img"> Name: ${results[i].name} Price: $ ${results[i].price} Quantity: ${count[i]}  <button type="button" class="close" data-id="${results[i].id}" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>`);
             newUl.append(newLi);
@@ -23,9 +30,9 @@ function viewCart(){
         });
         let totalPrice=0;
         for(let i=0; i< results.length; i++){
-            totalPrice += Number(results[i].price);
+            totalPrice += Number(results[i].price)*Number(count[i]);
         }
-        $("#total-price").html("Total Price : " + totalPrice);
+        $("#total-price").html("Total Price : $" + totalPrice);
 
         }
     });

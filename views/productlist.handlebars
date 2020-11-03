@@ -22,9 +22,11 @@
                       <h5 class="card-title">{{dataValues.name}}</h5>
                     </div>
                     <hr/>
-                    <div class="btnSpot divider">
-                      <a href="/shop/product/{{dataValues.id}}" class="btn btn-primary">Buy</a><h5 class="card-title price">${{dataValues.price}}</h5>
+                    <div class="btnSpot divider row">
+                      <a href="/shop/product/{{dataValues.id}}" class="btn btn-primary col-auto">Buy</a><h5 class="card-title price col-auto">${{dataValues.price}}</h5>
+                      <button class="btn btn-round btn-danger add-to-cart ml-auto col-auto" data-id="{{dataValues.id}}" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
                     </div> 
+                      
                 </div>
             </div>
         {{/each}} 
