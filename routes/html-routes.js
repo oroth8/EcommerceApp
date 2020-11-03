@@ -7,7 +7,7 @@ const path=require("path");
 module.exports = function(app) {
 
     app.get("/", (req, res) => {
-      db.Product.findAll().then(products => {
+      db.Product.findAll({group: "subCategory"}).then(allProducts => {
         let accessLevel=0;
         if(req.user)accessLevel=req.user.accessLevel;
         // People who have not logged in have an access level of 0
@@ -16,7 +16,7 @@ module.exports = function(app) {
         // class of users, admins, with an access level of ten.
         if(accessLevel>=10) accessGranted=true; else accessGranted=false;
         // If we pass accessGranted=true to the main page, it will display the admin button
-        res.render("landing",{layout:"main", products, accessGranted:accessGranted});
+        res.render("landing",{layout:"main", allProducts, accessGranted:accessGranted});
       })
         
 

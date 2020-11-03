@@ -138,6 +138,20 @@ db.Product.findAll()
         products,
     });
 }).catch(err=>console.log(err)));
+
+app.get("/shop/:subCategory", (req, res) => {
+  db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+    let category = req.params.subCategory;
+    db.Product.findAll({
+      where: {
+        subCategory: category,
+      },
+    }).then((products) => {
+      res.render("productlist", { layout: "main", allProducts, products });
+    });
+  });
+
+});
     
 
 
