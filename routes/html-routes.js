@@ -7,7 +7,7 @@ const path=require("path");
 module.exports = function(app) {
 
     app.get("/", (req, res) => {
-      db.Product.findAll().then(products => {
+      db.Product.findAll({group: "subCategory"}).then(products => {
         let accessLevel=0;
         if(req.user)accessLevel=req.user.accessLevel;
         // People who have not logged in have an access level of 0
