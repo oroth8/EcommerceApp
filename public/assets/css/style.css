@@ -100,5 +100,27 @@ table, th, td {
   .landingProductImgs{
       max-height: 100%;
   }
+
+  .shopImg{
+    height: 280px;
+    width: 280px;
+  }
+
+  .cardSize{
+    height: 120px;
+    width: 286px;
+  }
+  .card{
+    margin: 10px;
+  }
+
+  .btnSpot{
+    margin: 5px;
+  }
+
+  .price{
+    display: inline-block;
+    margin-left: 10px;
+  }
 /* End custom CSS */
 

@@ -1,0 +1,32 @@
+
+{{!-- <div>
+{{#each products}}
+<h1>{{dataValues.brand}}</h1>
+{{dataValues.name}}
+{{dataValues.catergory}}
+{{dataValues.subCategory}}
+{{dataValues.price}}
+{{dataValues.image_URLs}}
+{{dataValues.createAt}}
+{{dataValues.updatedAt}}
+{{/each}}
+</div> --}}
+
+<div class="container">
+    <div class="row row-cols-3">
+         {{#each products}}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{dataValues.image_URLs}}" class="card-img-top shopImg" alt="{{dataValues.name}}">
+                    <div class="card-body cardSize">
+                      <h5 class="card-title">{{dataValues.name}}</h5>
+                    </div>
+                    <hr/>
+                    <div class="btnSpot divider">
+                      <a href="#" class="btn btn-primary">Buy</a><h5 class="card-title price">${{dataValues.price}}</h5>
+                    </div> 
+                </div>
+            </div>
+        {{/each}} 
+    </div>   
+</div>
