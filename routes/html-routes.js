@@ -1,6 +1,7 @@
 var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
+const { mainModule } = require("process");
 
 // Routes
 // =============================================================
@@ -170,5 +171,26 @@ module.exports = function(app) {
             });
         }else res.render("login", {});
     }); 
+
+    app.get("/cart", function(req,res){
+      res.render("cart",{});
+    });
+
+    app.post("/cart",function(req,res){
+      let array=[];
+      if(req.body.limitCart){
+      for(let i=0; i< req.body.limitCart.length; i++){
+        array.push(Number(req.body.limitCart[i]));
+      }
+      db.Product.findAll({
+        where: {
+          id: array
+        }
+      }).then(function(response){
+        res.json(response);
+      });}else{
+      res.render("cart",{});
+      }
+    });
 
 };
