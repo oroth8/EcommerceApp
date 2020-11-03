@@ -128,20 +128,39 @@ app.get('/search', (req,res)=>{
       else res.render("login", {});
     });   
 
-    app.get("/admin/Product", (req,res)=>{
+    // Sends the user to adminadd page where they can add a product to the database.
+    app.get("/admin/:table/add", function(req,res){
+      if(req.user){
+          let table=req.params.table;
+          db[`${table}`].findAll({
+              attributes:["name", "brand", "category", "subCategory", "price", "image_URLs"],
+              where: {
+              id: 1
+          }
+          }).then(function(results){
+              let item=(results[0].dataValues);
+              
+              if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+              res.render("adminadd", { "item": item, accessGranted:accessGranted});
+          });
+      }else res.render("login", {});
+  }); 
+
+    app.get("/admin/:table", (req,res)=>{
+      console.log("FIRST ONE");
      if (req.user) {        
          if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
         db.Product.findAll({}).then((data)=>{
-          console.log(data);
           res.render("adminProduct",{accessGranted:accessGranted, data:data})
         });
       }
+      else res.render("login");
+      
     });
 
-
-
     // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
-    app.get("/admin/:table/:category?", function(req,res){
+    app.get("/admin/:table/:category", function(req,res){
+      console.log("Then t'OTHER");
       let table=req.params.table;
       if(req.params.category){
         let category=["id"];
@@ -172,22 +191,6 @@ app.get('/search', (req,res)=>{
       }
     });
 
-    // Sends the user to adminadd page where they can add a product to the database.
-    app.get("/admin/:table/add", function(req,res){
-        if(req.user){
-            let table=req.params.table;
-            db[`${table}`].findAll({
-                where: {
-                id: 1
-            }
-            }).then(function(results){
-                let item=(results[0].dataValues);
-                
-                if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-                res.render("adminadd", { "item": item, accessGranted:accessGranted});
-            });
-        }else res.render("login", {});
-    }); 
 
     app.get("/cart", function(req,res){
       res.render("cart",{});
