@@ -4,6 +4,11 @@ table, th, td {
     border: 1px solid black;
   }
 
+  .cart-img{
+    width: 20px;
+    height: auto;
+
+  }
   .container {
     max-width: 960px;
   }

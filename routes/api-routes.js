@@ -192,5 +192,22 @@ db.Product.findAll()
       });
   });
 
+  app.post("/cart",function(req,res){
+    let array=[];
+    if(req.body.limitCart){
+    for(let i=0; i< req.body.limitCart.length; i++){
+      array.push(Number(req.body.limitCart[i]));
+    }
+    db.Product.findAll({
+      where: {
+        id: array
+      }
+    }).then(function(response){
+      res.json(response);
+    });}else{
+    res.render("cart",{});
+    }
+  });
+
 
 };
