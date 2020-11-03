@@ -1,6 +1,8 @@
 var db = require("../models");
 const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const { mainModule } = require("process");
 
 // Routes
@@ -51,14 +53,18 @@ module.exports = function(app) {
 
 
 
+
   // Display products on productlist
   app.get('/shop', (req,res)=> 
-  db.Product.findAll()
+  db.Product.findAll({group: "subCategory"}).then(allProducts => {
+    db.Product.findAll()
   .then(products => {
-      res.render('productlist', {layout: "main",
+      res.render('productlist', {layout: "main", allProducts,
           products,
       });
-  }).catch(err=>console.log(err)));
+  }).catch(err=>console.log(err))
+  })
+  );
   
   app.get("/shop/:subCategory", (req, res) => {
     db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
@@ -74,19 +80,36 @@ module.exports = function(app) {
   
   });
       
-  app.get('/shop/product/:id', (req,res) => 
-  db.Product.findAll(
-    {
-    where: {
-      id: req.params.id
-    }
-  }).then(result => {
-              console.log(result);
-              let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
-              console.log( id, brand, name);
-            res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs});
-  }).catch(err=>console.log(err)));
+  app.get('/shop/product/:id', (req,res) => {
+    db.Product.findAll({group: "subCategory"}).then(allProducts => {
+      db.Product.findAll(
+        {
+        where: {
+          id: req.params.id
+        }
+      }).then(result => {
+                  console.log(result);
+                  let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
+                  console.log( id, brand, name);
+                res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts});
+      }).catch(err=>console.log(err))});
+    })
+  
 
+// Searchbar
+// search for gigs
+app.get('/search', (req,res)=>{
+  let {term} = req.query;
+  // lower case
+  term = term.toLowerCase()
+  db.Product.findAll({where: {subCategory: { [Op.like]: '%'+term+'%'}}})
+  .then(products => {
+    console.log(products);
+    res.render('productlist', {layout: "main",
+          products,
+      });
+});
+});
 
 
 // ------------------------------------------
@@ -105,20 +128,39 @@ module.exports = function(app) {
       else res.render("login", {});
     });   
 
-    app.get("/admin/Product", (req,res)=>{
+    // Sends the user to adminadd page where they can add a product to the database.
+    app.get("/admin/:table/add", function(req,res){
+      if(req.user){
+          let table=req.params.table;
+          db[`${table}`].findAll({
+              attributes:["name", "brand", "category", "subCategory", "price", "image_URLs"],
+              where: {
+              id: 1
+          }
+          }).then(function(results){
+              let item=(results[0].dataValues);
+              
+              if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+              res.render("adminadd", { "item": item, accessGranted:accessGranted});
+          });
+      }else res.render("login", {});
+  }); 
+
+    app.get("/admin/:table", (req,res)=>{
+      console.log("FIRST ONE");
      if (req.user) {        
          if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
         db.Product.findAll({}).then((data)=>{
-          console.log(data);
           res.render("adminProduct",{accessGranted:accessGranted, data:data})
         });
       }
+      else res.render("login");
+      
     });
 
-
-
     // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
-    app.get("/admin/:table/:category?", function(req,res){
+    app.get("/admin/:table/:category", function(req,res){
+      console.log("Then t'OTHER");
       let table=req.params.table;
       if(req.params.category){
         let category=["id"];
@@ -149,22 +191,6 @@ module.exports = function(app) {
       }
     });
 
-    // Sends the user to adminadd page where they can add a product to the database.
-    app.get("/admin/:table/add", function(req,res){
-        if(req.user){
-            let table=req.params.table;
-            db[`${table}`].findAll({
-                where: {
-                id: 1
-            }
-            }).then(function(results){
-                let item=(results[0].dataValues);
-                
-                if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-                res.render("adminadd", { "item": item, accessGranted:accessGranted});
-            });
-        }else res.render("login", {});
-    }); 
 
     app.get("/cart", function(req,res){
       res.render("cart",{});

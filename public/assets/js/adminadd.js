@@ -14,6 +14,8 @@ $("#add-submit").on("click",function(e){
     body["subCategory"]=$("#id-subCategory").val();
     body["price"]=Number($("#id-price").val());
     body["image_URLs"]=$("#id-image_URLs").val();
+    body["createdAt"]= new Date(Date.now()).toISOString();
+    body["updatedAt"]= new Date(Date.now()).toISOString();
 
     $.post("/admin/Product/add", body).done(function(){
         window.open("/admin/Product");
