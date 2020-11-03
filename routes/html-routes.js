@@ -52,12 +52,15 @@ module.exports = function(app) {
 
   // Display products on productlist
   app.get('/shop', (req,res)=> 
-  db.Product.findAll()
+  db.Product.findAll({group: "subCategory"}).then(allProducts => {
+    db.Product.findAll()
   .then(products => {
-      res.render('productlist', {layout: "main",
+      res.render('productlist', {layout: "main", allProducts,
           products,
       });
-  }).catch(err=>console.log(err)));
+  }).catch(err=>console.log(err))
+  })
+  );
   
   app.get("/shop/:subCategory", (req, res) => {
     db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
