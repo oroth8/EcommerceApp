@@ -1,91 +1,55 @@
-
-
-
-
 {{!-- This will create a container for the information that will be displayed to the admin when viewing a table. --}}
+
+<link rel="stylesheet" type="text/css" href="/assets/css/adminProduct.css">
 <div class="container">
-  <div class="row row-cols-3">
+  <div class="row row-cols-3 border-bottom">
   {{#each data}}
-    <div class="col">
+    <div class="col product-container m-auto">
       <div class="col-12 product-taxonomy">{{dataValues.subCategory}} > {{dataValues.subCategory}} > {{dataValues.brand}}</div>  
         <div class="row">
           <div class="col-6"> 
-            <div class="productThumbnail">
-              <img width="100%" src="{{dataValues.image_URLs}}">
+            <div class="product-thumbnail">
+              <img class="product-image" width="100%" src="{{dataValues.image_URLs}}">
             </div>
           </div>
           <div class="col-6">
-            <h5 class="productName">
-                <p>
-                  {{dataValues.name}}
-                </p>
-                <p>${{dataValues.price}}</p>
-            </h3>
+                <p class="product-name">
+                {{dataValues.name}}
+              </p>
+              <p>${{dataValues.price}}</p>
+              <p><a href="/admin/Product/change/byId/{{dataValues.id}}" class="editProduct">Edit</a></p>
           </div> 
         </div>
     </div>
   {{/each}}
   </div>
-{{!-- Creates the table --}}
-{{!-- <table>
-    {{!-- We create the header row which displayes the keys of the object from the table. --}}
-    <tr>
-        {{#each item}}
-        <th >
-            {{@key}}
-        </th >
-        {{/each}}
-    </tr>
-    {{!-- We loop through each item, creating a row for each item, then a column for each key. --}}
-        {{#each table}}
-    <tr>
-        {{#each this}}
-            <td>
-             {{this}}
-            </td>
-        {{/each}}     
-    </tr>
-        {{/each}}
-</table>    --}}
 
 {{!-- Provide buttons which link to different pages based on what the admin wants to accomplish. --}}
 <div class="row">
+  {{!-- Sends the user to the change by category page --}}
+  <form class="col-4">
+  <h4 class="admin-tools"> Change by Column-name </h4>
 
-{{!-- Sends the user to the change by category page --}}
-<form class="col-4">
-<h4> Change by Category </h4>
+  <select id="change-by-category"> 
+    <option value="brand">Brand</option >
+    <option value="category">Category</option >
+    <option value="subCategory">subCategory</option >
+    <option value="price">Price</option >
+  </select>
+  </form>
+  {{!-- Sends the user to the change by id page. --}}
+  <div class="col-4">
 
-<select id="change-by-category"> 
-        {{#each item}}
-        <option value={{@key}} >
-            {{@key}}
-        </option >
-        {{/each}}
-</select>
-</form>
-
-{{!-- Sends the user to the change by id page. --}}
-<form class="col-4">
-    <h4>Change by ID</h4>
-  <div class="form-row align-items-center">
-    <div class="col-auto">
-      <label class="sr-only" for="change-by-id">Name</label>
-      <input type="text" class="form-control mb-2" id="change-by-id">
-    </div>
-    <div class="col-auto">
-      <button type="button" class="btn btn-primary mb-2" id="id-change-submit">Submit</button>
-    </div>
   </div>
-</form>
 
-{{!-- Sends the user to the add product page. --}}
-<form class="col-4">
-<h4> Add Product </h4>
+  {{!-- Sends the user to the add product page. --}}
+  <form class="col-4">
+  <h4 class="admin-tools"> Add Product </h4>
 
-<button type="button" class="btn btn-primary" id="add-product">Add a Product</button>
-</form>
+  <button type="button" class="btn btn-primary btn-sm admin-button" id="add-product">Add a Product</button>
+  </form>
 
-</div>
+  </div>
 
 </div>
 
