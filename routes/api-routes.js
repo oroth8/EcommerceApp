@@ -16,7 +16,8 @@ module.exports = function(app) {
     let item=(results[0].dataValues);
     if(req.user)  
     {
-      let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
+      let accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
       res.render("adminchangeid", { "item": item, accessGranted});
     }
     else res.render("/login", {});
@@ -58,7 +59,8 @@ module.exports = function(app) {
           }
           if(req.user)
           {
-            let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
+            let accessLevel=req.user.accessLevel;
+            if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
             res.render("adminchange", { "item": item, "table": newTable, accessGranted});
           }
           else res.render("/login",{});
@@ -174,7 +176,9 @@ module.exports = function(app) {
     }).then(function(response){
       res.json(response);
     });}else{
-    res.render("cart",{});
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+    res.render("cart",{admin, loggedIn:accessLevel});
     }
   });
 

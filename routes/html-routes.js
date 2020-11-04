@@ -125,7 +125,8 @@ app.get('/search', (req,res)=>{
 // Send the user to the admin home page.
   app.get("/admin", function(req,res){
     if (req.user) {        
-        if(req.user.accessLevel>=10) admin=true; else admin=false;
+      let accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
         res.render("adminhome",{admin, loggedIn:accessLevel});
       }
       else res.render("login", {});
@@ -143,7 +144,8 @@ app.get('/search', (req,res)=>{
           }).then(function(results){
               let item=(results[0].dataValues);
               
-              if(req.user.accessLevel>=10) admin=true; else admin=false;
+              let accessLevel=req.user.accessLevel;
+              if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
               res.render("adminadd", { "item": item, admin, loggedIn:accessLevel});
           });
       }else res.render("login", {});
@@ -151,7 +153,8 @@ app.get('/search', (req,res)=>{
 
     app.get("/admin/:table", (req,res)=>{
      if (req.user) {        
-         if(req.user.accessLevel>=10) admin=true; else admin=false;
+      let accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
         db.Product.findAll({}).then((data)=>{
           res.render("adminProduct",{admin, loggedIn:accessLevel, data:data})
         });
@@ -198,8 +201,9 @@ app.get('/search', (req,res)=>{
         let id=req.user.id;
         let username=req.user.username;
         let date=cleanUpDates(req.user.createdAt);
-        
-        res.render("account",{id, username, date});
+        let accessLevel=req.user.accessLevel;
+        if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+        res.render("account",{id, username, date, admin, loggedIn:accessLevel});
       }
       else res.render("login");
     });
@@ -216,15 +220,17 @@ app.get('/search', (req,res)=>{
 
 
     app.get("/cart", function(req,res){      
-      let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
-      res.render("cart",{admin});
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+      res.render("cart",{admin, loggedIn:accessLevel});
     });
 
 
 
     app.get("/checkout/thankyou",function(req,res){
-      let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
-      res.render("thankyou",{admin})
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+      res.render("thankyou",{admin, loggedIn:accessLevel})
     });
 
 };
