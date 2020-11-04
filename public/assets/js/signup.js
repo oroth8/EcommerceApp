@@ -13,6 +13,9 @@ $(document).ready(() => {
       };
   
       if (!userData.username || !userData.password) {
+        $("#signup-modal").modal({
+          show: true
+        });
         return;
       }
       // If we have an email and password, run the signUpUser function
