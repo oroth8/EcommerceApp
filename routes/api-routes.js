@@ -3,6 +3,10 @@ var db = require("../models");
 const passport = require("../config/passport");
 const sequelize=require("sequelize");
 const Op=sequelize.Op;
+// If a user has at least this high accessLevel, then they are an admin
+// The default access level for new uesers is 10
+const ADMIN_LEVEL=100;
+
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -20,7 +24,7 @@ module.exports = function(app) {
     {
       let accessLevel=req.user.accessLevel;
       if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
-      res.render("adminchangeid", { "item": item, accessGranted});
+      res.render("adminchangeid", { "item": item, admin, loggedIn:accessLevel});
     }
     else res.render("/login", {});
   });
@@ -63,7 +67,7 @@ module.exports = function(app) {
           {
             let accessLevel=req.user.accessLevel;
             if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
-            res.render("adminchange", { "item": item, "table": newTable, accessGranted});
+            res.render("adminchange", { "item": item, "table": newTable, admin, loggedIn:accessLevel});
           }
           else res.render("/login",{});
         });
