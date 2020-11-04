@@ -14,8 +14,11 @@ module.exports = function(app) {
     }
   }).then(function(results){
     let item=(results[0].dataValues);
-    if(req.user)
-      res.render("adminchangeid", { "item": item});
+    if(req.user)  
+    {
+      let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
+      res.render("adminchangeid", { "item": item, accessGranted});
+    }
     else res.render("/login", {});
   });
 });
@@ -54,7 +57,10 @@ module.exports = function(app) {
             newTable.push(results[i].dataValues);
           }
           if(req.user)
-            res.render("adminchange", { "item": item, "table": newTable});
+          {
+            let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
+            res.render("adminchange", { "item": item, "table": newTable, accessGranted});
+          }
           else res.render("/login",{});
         });
   });
@@ -168,5 +174,23 @@ module.exports = function(app) {
     }
   });
 
+  app.post("/order",function(req,res){
+      let cart=req.body.id;
+      cart=Number(cart);
+      let id;
+      if(!req.user){
+        id=0;
+      }else{
+        id=req.user.id;
+      }
+      console.log(req.user);
+        db.Order.create({
+          "product_id": Number(cart),
+          "user_id": Number(id)
+        }).then( function(){
+        res.end();
+      });
+    });
+    
 
 };

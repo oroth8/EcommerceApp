@@ -29,5 +29,7 @@ $("#cart-view").on("click",viewCart);
 function updateCartCount(){
     $("#cart-count").text(limitCart.length);
 }
+$(document).ready(updateCartCount);
 
-updateCartCount();
+
+
