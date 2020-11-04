@@ -39,5 +39,21 @@ function viewCart(){
 };
 
 viewCart();
-$("#reload-cart").on("click",viewCart);
+
+
+$("#finalize-checkout").on("click",function(e){
+    let count=0;
+    $.each(limitCart, function(i, val){
+        $.post("/order",{"id": val}).done(function(){
+            count++;
+            if(count==limitCart.length){
+                console.log("done");
+                window.location.href = "/checkout/thankyou";
+            }
+        });
+
+    });
+    });
+
+
 
