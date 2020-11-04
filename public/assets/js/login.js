@@ -38,6 +38,9 @@ $(document).ready(() => {
           // If there's an error, log the error
         })
         .catch(err => {
+          $("#login-modal").modal({
+            show: true
+          });
           console.log(err);
         });
     }
