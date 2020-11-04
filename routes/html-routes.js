@@ -192,16 +192,16 @@ app.get('/search', (req,res)=>{
       }
     });
 
-    app.get("/account", (req,res)=>{
-      if(req.user)
-      {
-        let id=req.user.id;
-        let username=req.user.username;
-        let date=cleanUpDates(req.user.createdAt);
-        
-        res.render("account",{id, username, date});
-      }
-      else res.render("login");
+    app.get("/account", (req, res) => {
+      db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+        if (req.user) {
+          let id = req.user.id;
+          let username = req.user.username;
+          let date = cleanUpDates(req.user.createdAt);
+
+          res.render("account", { id, username, date, allProducts });
+        } else res.render("login");
+      });
     });
 
     // For the member account page, to turn "2020-11-02T19:20:03.000Z" into "11/02/2020"
