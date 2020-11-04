@@ -47,14 +47,12 @@
           <a class="dropdown-item" href="/shop/{{dataValues.subCategory}}">{{dataValues.subCategory}}</a>
         {{/each}}
       </div>
-	  {{#if accessGranted}}
+	  {{#if admin}}
     <a class="py-2 d-none d-md-inline-block" href="/admin">Admin</a>
-	{{else}}
-	<a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
-	{{/if}}
+    {{/if}}
     <a class="py-2 d-none d-md-inline-block" href="#">Brands</a>
     
-	  {{#if accessGranted}}
+	  {{#if loggedIn}}
     <a class="py-2 d-none d-md-inline-block" href="/account">My Account</a>
     {{/if}}
     <!-- <a class="py-2 d-none d-md-inline-block" href="#">Shopping Cart</a> -->
@@ -69,6 +67,12 @@
         <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
         <button  value="Search" class="btn btn-outline-success my-2 my-sm-0" id="navSearch" type="submit">Search</button>
       </form>
+  
+	  {{#if loggedIn}}
+    <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
+    {{else}}
+    <a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
+    {{/if}}
   </div>
 		</nav>
 	{{{body}}}
