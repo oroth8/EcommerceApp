@@ -22,7 +22,6 @@ function makeNewChart(){
                 newDates[i]=dates[13-i];
             }
 
-    // let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(newCanvas, {
         type: 'line',
         data: {
