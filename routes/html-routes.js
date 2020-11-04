@@ -234,8 +234,8 @@ app.get('/search', (req,res)=>{
     });
 
     app.get("/adminsales",function(req,res){
-      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("adminsales",{accessGranted})
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel; 
+      res.render("adminsales",{admin, loggedIn:accessLevel})
     });
 
 };
