@@ -302,8 +302,10 @@ module.exports = function (app) {
     });
   });
   app.get("/adminsales", function (req, res) {
-    let accessLevel = 0;
-    if (req.user) accessLevel = req.user.accessLevel;
-    res.render("adminsales", { admin, loggedIn: accessLevel });
+    db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+      let accessLevel = 0;
+      if (req.user) accessLevel = req.user.accessLevel;
+      res.render("adminsales", { allProducts, admin, loggedIn: accessLevel });
+    });
   });
 };
