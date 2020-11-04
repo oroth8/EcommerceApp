@@ -39,5 +39,23 @@ function viewCart(){
 };
 
 viewCart();
-$("#reload-cart").on("click",viewCart);
+
+
+$("#finalize-checkout").on("click",function(e){
+    let count=0;
+    $.each(limitCart, function(i, val){
+        $.post("/order",{"id": val}).done(function(){
+            count++;
+            if(count==limitCart.length){
+                limitCart=[];
+                localStorage.setItem("limitCart", JSON.stringify(limitCart)); 
+                window.location.href = "/checkout/thankyou";
+            }
+        });
+
+    });
+    });
+
+
+
 

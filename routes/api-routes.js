@@ -174,5 +174,23 @@ module.exports = function(app) {
     }
   });
 
+  app.post("/order",function(req,res){
+      let cart=req.body.id;
+      cart=Number(cart);
+      let id;
+      if(!req.user){
+        id=0;
+      }else{
+        id=req.user.id;
+      }
+      console.log(req.user);
+        db.Order.create({
+          "product_id": Number(cart),
+          "user_id": Number(id)
+        }).then( function(){
+        res.end();
+      });
+    });
+    
 
 };

@@ -198,22 +198,10 @@ app.get('/search', (req,res)=>{
       res.render("cart",{accessGranted});
     });
 
-    app.post("/cart",function(req,res){
-      let array=[];
-      if(req.body.limitCart){
-      for(let i=0; i< req.body.limitCart.length; i++){
-        array.push(Number(req.body.limitCart[i]));
-      }
-      db.Product.findAll({
-        where: {
-          id: array
-        }
-      }).then(function(response){
-        res.json(response);
-      });}else{
-        let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("cart",{accessGranted});
-      }
+
+
+    app.get("/checkout/thankyou",function(req,res){
+      res.render("thankyou",{})
     });
 
 };
