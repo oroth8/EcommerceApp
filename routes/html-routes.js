@@ -233,16 +233,9 @@ app.get('/search', (req,res)=>{
       res.render("thankyou",{admin, loggedIn:accessLevel})
     });
 
-<<<<<<< HEAD
     app.get("/adminsales",function(req,res){
       let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
       res.render("adminsales",{accessGranted})
     });
 
-=======
-    app.get("/admin/sales",function(req,res){
-      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("adminsales",{accessGranted})
-    });
->>>>>>> main
 };
