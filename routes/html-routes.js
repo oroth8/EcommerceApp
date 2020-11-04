@@ -201,7 +201,8 @@ app.get('/search', (req,res)=>{
 
 
     app.get("/checkout/thankyou",function(req,res){
-      res.render("thankyou",{})
+      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+      res.render("thankyou",{accessGranted})
     });
 
 };
