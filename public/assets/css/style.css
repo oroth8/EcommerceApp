@@ -167,5 +167,15 @@ display: inline-block;
     line-height: 3;
     border-radius: 15px;
   }
+  .adminHome{
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+  .dashboard-container{
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    padding: 25px;
+  }
 /* End custom CSS */
 
