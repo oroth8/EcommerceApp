@@ -97,18 +97,26 @@ module.exports = function(app) {
   
 
 // Searchbar
-// search for gigs
+// search for products
 app.get('/search', (req,res)=>{
   let {term} = req.query;
   // lower case
   term = term.toLowerCase()
-  db.Product.findAll({where: {subCategory: { [Op.like]: '%'+term+'%'}}})
+  db.Product.findAll(
+    {where: {
+      [Op.or]:[
+      {subCategory: { [Op.like]: '%'+term+'%'}},
+      {brand: { [Op.like]: '%'+term+'%'}},
+      {name: { [Op.like]: '%'+term+'%'}},
+      {category: { [Op.like]: '%'+term+'%'}}
+      ]
+    }})
   .then(products => {
     console.log(products);
     res.render('productlist', {layout: "main",
           products,
       });
-});
+    });
 });
 
 
@@ -147,7 +155,6 @@ app.get('/search', (req,res)=>{
   }); 
 
     app.get("/admin/:table", (req,res)=>{
-      console.log("FIRST ONE");
      if (req.user) {        
          if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
         db.Product.findAll({}).then((data)=>{
@@ -160,7 +167,6 @@ app.get('/search', (req,res)=>{
 
     // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
     app.get("/admin/:table/:category", function(req,res){
-      console.log("Then t'OTHER");
       let table=req.params.table;
       if(req.params.category){
         let category=["id"];

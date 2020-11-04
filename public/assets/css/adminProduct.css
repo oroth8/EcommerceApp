@@ -1,5 +1,5 @@
 .product-image{
-    width:140px;
+    /* width:140px; */
     height:140px;
 }
 .product-thumbnail{
@@ -22,9 +22,6 @@
     margin:5px;
 }
 
-.admin-tools{
-
-}
 
 
 @media only screen and (max-width:600px){
