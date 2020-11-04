@@ -151,5 +151,15 @@ display: inline-block;
     border-color: rgba(0, 0, 0, .85);
   }
     
+/* For /account */
+  .accountInfo{
+    margin: auto;
+    clear: both;
+    border: 1px solid blue;
+    width: fit-content;
+    margin-top: 2rem;
+    line-height: 3;
+    border-radius: 15px;
+  }
 /* End custom CSS */
 
