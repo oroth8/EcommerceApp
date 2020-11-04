@@ -14,5 +14,5 @@ $(".change-submit").on("click",function(e){
 // Sends back to main product view.
 $("#back-to-product").on("click",function(e){
 e.preventDefault();
-window.open(`/admin/Product/`);
+window.location.href =`/admin/Product/`;
 });

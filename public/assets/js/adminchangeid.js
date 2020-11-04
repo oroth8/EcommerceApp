@@ -1,7 +1,7 @@
 // Sends back to main product view with options.
 $("#back-to-product").on("click",function(e){
     e.preventDefault();
-    window.open(`/admin/Product/`);
+    window.location.href =`/admin/Product/`;
 });
 
 // Takes in input from user and sends to server to submit change in database.
