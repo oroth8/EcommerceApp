@@ -1,16 +1,14 @@
 {{!-- Admin home, current links to products and sales information (however there currently is no sales info saved.) --}}
-
-<h2 style="text-align: center">What would you like to do today?</h2>
-
-
-<div class="row container">
-
-<figure class="col-6">
- 
-    <a href="/admin/Product"><h4 class="text-centered"> View or Manage Products</h4></a>
-</figure>
-
-<div class="col-6"><a href="/admin"><h4 class="text-centered"> View or Manage Sales</h4></a></div>
-  
-
+<div class="container adminHome">
+    <h2 style="text-align: center">What would you like to do today?</h2>
+    <div class="row dashboard-container">
+        <figure class="col-md-6">
+        <a href="/admin/Product"><button class="btn btn-primary">View or Manage Products</button></a>
+        </figure>
+        <div class="col-md-6">
+            <a href="/admin">
+            <button class="btn btn-primary"> View or Manage Sales</button>
+            </a>
+        </div>
+    </div>
 </div>
