@@ -3,6 +3,9 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+// If a user has at least this high accessLevel, then they are an admin
+// The default access level for new uesers is 10
+const ADMIN_LEVEL=100;
 
 // Routes
 // =============================================================
@@ -10,13 +13,8 @@ module.exports = function(app) {
 
     app.get("/", (req, res) => {
       db.Product.findAll({group: "subCategory"}).then(allProducts => {
-        let accessLevel=0;
-        if(req.user)accessLevel=req.user.accessLevel;
-        // People who have not logged in have an access level of 0
-        // Default uses have an access level of 10
-        // If we want to, we can make the defaul accesslevel lower, and make a new
-        // class of users, admins, with an access level of ten.
-        if(accessLevel>=10) admin=true; else admin=false;
+        let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+        if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
         // If we pass admin=true to the main page, it will display the admin button
         res.render("landing",{layout:"main", allProducts, admin, loggedIn:accessLevel});
       })
@@ -27,18 +25,20 @@ module.exports = function(app) {
     app.get("/login", (req, res) => {
         // If the user already has an account send them to the members page
         if (req.user) {
-            if(req.user.accessLevel>=10) admin=true; else admin=false;
-            // If we pass admin=true to the main page, it will display the admin button
-            res.render("landing",{layout:"main", admin:admin});
+          
+          let accessLevel=req.user.accessLevel;
+          if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+            res.render("landing",{layout:"main", admin, loggedIn:accessLevel});
         }
         else res.render("login", {});
       });      
       app.get("/signup", (req, res) => {
           // If the user already has an account send them to the members page
           if (req.user) {
-            if(req.user.accessLevel>=10) admin=true; else admin=false;
-            // If we pass admin=true to the main page, it will display the admin button
-            res.render("landing",{layout:"main", admin:admin});
+            
+          let accessLevel=req.user.accessLevel;
+          if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+            res.render("landing",{layout:"main", admin, loggedIn:accessLevel});
            
           }
           else  res.render("signup",{});
@@ -47,16 +47,16 @@ module.exports = function(app) {
 
   // Display products on productlist
   app.get('/shop', (req,res)=> 
-  db.Product.findAll({group: "subCategory"}).then(allProducts => {
-    db.Product.findAll()
-  .then(products => {
-    
-    let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
-    res.render('productlist', {layout: "main", allProducts,
-        products,admin
-    });
-  }).catch(err=>console.log(err))
-  })
+    db.Product.findAll({group: "subCategory"}).then(allProducts => {
+      db.Product.findAll()
+    .then(products => {
+        let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+        if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+        res.render('productlist', {layout: "main", allProducts,
+            products,admin, loggedIn:accessLevel
+        });
+      }).catch(err=>console.log(err))
+    })
   );
   
   app.get("/shop/:subCategory", (req, res) => {
@@ -66,9 +66,10 @@ module.exports = function(app) {
         where: {
           subCategory: category,
         },
-      }).then((products) => {
-        let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
-        res.render("productlist", { layout: "main", allProducts, products,admin });
+      }).then((products) => {        
+        let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+        if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+        res.render("productlist", { layout: "main", allProducts, products,admin, loggedIn:accessLevel });
       });
     });
   
@@ -82,9 +83,9 @@ module.exports = function(app) {
           id: req.params.id
         }
       }).then(result => {
-        let {id, brand, name, category, subCategory, price, image_URLs} = result[0];                          
-        let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
-        res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, admin});
+        let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+        if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+        res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, admin, loggedIn:accessLevel});
       }).catch(err=>console.log(err))});
     })
   
@@ -104,12 +105,11 @@ app.get('/search', (req,res)=>{
       {category: { [Op.like]: '%'+term+'%'}}
       ]
     }})
-  .then(products => {
-    console.log(products);
-    
-    let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
+  .then(products => {    
+    let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+    if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
     res.render('productlist', {layout: "main",
-          products,admin
+          products,admin, loggedIn:accessLevel
       });
     });
 });
@@ -126,7 +126,7 @@ app.get('/search', (req,res)=>{
   app.get("/admin", function(req,res){
     if (req.user) {        
         if(req.user.accessLevel>=10) admin=true; else admin=false;
-        res.render("adminhome",{admin:admin});
+        res.render("adminhome",{admin, loggedIn:accessLevel});
       }
       else res.render("login", {});
     });   
@@ -144,7 +144,7 @@ app.get('/search', (req,res)=>{
               let item=(results[0].dataValues);
               
               if(req.user.accessLevel>=10) admin=true; else admin=false;
-              res.render("adminadd", { "item": item, admin:admin});
+              res.render("adminadd", { "item": item, admin, loggedIn:accessLevel});
           });
       }else res.render("login", {});
   }); 
@@ -153,7 +153,7 @@ app.get('/search', (req,res)=>{
      if (req.user) {        
          if(req.user.accessLevel>=10) admin=true; else admin=false;
         db.Product.findAll({}).then((data)=>{
-          res.render("adminProduct",{admin:admin, data:data})
+          res.render("adminProduct",{admin, loggedIn:accessLevel, data:data})
         });
       }
       else res.render("login");
