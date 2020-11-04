@@ -123,14 +123,15 @@ app.get('/search', (req,res)=>{
 // ------------------------------------------
 
 // Send the user to the admin home page.
-  app.get("/admin", function(req,res){
-    if (req.user) {        
-        if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-        res.render("adminhome",{accessGranted:accessGranted});
-      }
-      else res.render("login", {});
-    });   
-
+  app.get("/admin", function (req, res) {
+    db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+      if (req.user) {
+        if (req.user.accessLevel >= 10) accessGranted = true;
+        else accessGranted = false;
+        res.render("adminhome", {allProducts, accessGranted: accessGranted });
+      } else res.render("login", {allProducts});
+    });
+  });
     // Sends the user to adminadd page where they can add a product to the database.
     app.get("/admin/:table/add", function(req,res){
       if(req.user){
