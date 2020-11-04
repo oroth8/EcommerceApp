@@ -97,18 +97,26 @@ module.exports = function(app) {
   
 
 // Searchbar
-// search for gigs
+// search for products
 app.get('/search', (req,res)=>{
   let {term} = req.query;
   // lower case
   term = term.toLowerCase()
-  db.Product.findAll({where: {subCategory: { [Op.like]: '%'+term+'%'}}})
+  db.Product.findAll(
+    {where: {
+      [Op.or]:[
+      {subCategory: { [Op.like]: '%'+term+'%'}},
+      {brand: { [Op.like]: '%'+term+'%'}},
+      {name: { [Op.like]: '%'+term+'%'}},
+      {category: { [Op.like]: '%'+term+'%'}}
+      ]
+    }})
   .then(products => {
     console.log(products);
     res.render('productlist', {layout: "main",
           products,
       });
-});
+    });
 });
 
 
