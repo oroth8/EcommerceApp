@@ -225,9 +225,12 @@ app.get('/search', (req,res)=>{
 
 
 
-    app.get("/checkout/thankyou",function(req,res){
-      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("thankyou",{accessGranted})
+    app.get("/checkout/thankyou", function (req, res) {
+      db.Product.findAll({ group: "subCategory" }).then(allProducts => {
+        let accessGranted = false;
+        if (req.user && req.user.accessLevel >= 10) accessGranted = true;
+        res.render("thankyou", { accessGranted, allProducts});
+      });
     });
 
 };
