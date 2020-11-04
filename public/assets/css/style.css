@@ -125,6 +125,7 @@ table, th, td {
 
   .btnSpot{
     margin: 5px;
+    display: inline-block;
   }
 
   .price{
