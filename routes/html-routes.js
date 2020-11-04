@@ -83,6 +83,7 @@ module.exports = function(app) {
           id: req.params.id
         }
       }).then(result => {
+        let {id, brand, name, category, subCategory, price, image_URLs} = result[0]; 
         let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
         if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
         res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, admin, loggedIn:accessLevel});
