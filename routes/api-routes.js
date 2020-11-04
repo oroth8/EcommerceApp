@@ -1,6 +1,8 @@
 const controller = require("../controller/controller");
 var db = require("../models");
 const passport = require("../config/passport");
+const sequelize=require("sequelize");
+const Op=sequelize.Op;
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -199,6 +201,34 @@ module.exports = function(app) {
         res.end();
       });
     });
+
+    // Counts the number of sales that occured each day for the past 14 days.
+    app.get("/adminsales/Order", (req,res)=>{
+        let count=0;
+        let dates=[];
+        let orderCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0];    
+      for(let i=0; i< 14; i++){
+        dates.push(new Date() - (i)*24 * 60 * 60 * 1000);
+          db.Order.count({          
+              where: {
+                createdAt: {
+                  [Op.lte]: new Date() - (i)*24 * 60 * 60 * 1000,
+                  [Op.gt]: new Date() - (i+1)*24 * 60 * 60 * 1000,
+                },
+               },
+             }).then( function(results){
+               count++;
+               orderCount[13-i]=results;
+               if(count==14){
+                 res.json({"orderCount": orderCount, "dates":dates});
+               }
+             })
+    
+        }
+ 
+         
+
+     });
     
 
 };

@@ -233,4 +233,9 @@ app.get('/search', (req,res)=>{
       res.render("thankyou",{admin, loggedIn:accessLevel})
     });
 
+    app.get("/adminsales",function(req,res){
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel; 
+      res.render("adminsales",{admin, loggedIn:accessLevel})
+    });
+
 };
