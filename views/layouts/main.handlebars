@@ -53,7 +53,10 @@
 	<a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
 	{{/if}}
     <a class="py-2 d-none d-md-inline-block" href="#">Brands</a>
-    <a class="py-2 d-none d-md-inline-block" href="#">My Account</a>
+    
+	  {{#if accessGranted}}
+    <a class="py-2 d-none d-md-inline-block" href="/account">My Account</a>
+    {{/if}}
     <!-- <a class="py-2 d-none d-md-inline-block" href="#">Shopping Cart</a> -->
     <a class="py-2 d-none d-md-inline-block" aria-label="Product" href="/cart">
         <svg  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

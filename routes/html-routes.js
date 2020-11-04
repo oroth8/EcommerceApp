@@ -192,6 +192,28 @@ app.get('/search', (req,res)=>{
       }
     });
 
+    app.get("/account", (req,res)=>{
+      if(req.user)
+      {
+        let id=req.user.id;
+        let username=req.user.username;
+        let date=cleanUpDates(req.user.createdAt);
+        
+        res.render("account",{id, username, date});
+      }
+      else res.render("login");
+    });
+
+    // For the member account page, to turn "2020-11-02T19:20:03.000Z" into "11/02/2020"
+    function cleanUpDates(timestamp){
+      let date=timestamp.split("T")[0];
+      date=date.split("-");
+      return `${date[1]}/${date[2]}/${date[0]}`;
+    }
+
+
+
+
 
     app.get("/cart", function(req,res){      
       let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
