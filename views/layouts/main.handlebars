@@ -48,14 +48,12 @@
           <div class="dropdown-divider"></div>
         {{/each}}
       </div>
-	  {{#if accessGranted}}
+	  {{#if admin}}
     <a class="py-2 d-none d-md-inline-block" href="/admin">Admin</a>
-	{{else}}
-	<a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
-	{{/if}}
+    {{/if}}
     <a class="py-2 d-none d-md-inline-block" href="#">Brands</a>
     
-	  {{#if accessGranted}}
+	  {{#if loggedIn}}
     <a class="py-2 d-none d-md-inline-block" href="/account">My Account</a>
     {{/if}}
     <!-- <a class="py-2 d-none d-md-inline-block" href="#">Shopping Cart</a> -->
@@ -70,10 +68,17 @@
         <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
         <button  value="Search" class="btn btn-outline-success my-2 my-sm-0" id="navSearch" type="submit">Search</button>
       </form>
-  </div>
+  
+	  {{#if loggedIn}}
+    <a class="py-2 d-none d-md-inline-block" href="/logout">Logout</a>
+    {{else}}
+    <a class="py-2 d-none d-md-inline-block" href="/login">Login</a>
+    {{/if}}
+  </nodiv>
 		</nav>
 	{{{body}}}
  {{!-- </body> --}}
+ <hr/>
 <footer class="container py-5">
   <div class="row">
     <div class="col-12 col-md">
@@ -81,41 +86,35 @@
       <small class="d-block mb-3 text-muted">&copy; 2017-2020</small>
     </div>
     <div class="col-6 col-md">
-      <h5>Features</h5>
+      <h5>Site Map</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Cool stuff</a></li>
-        <li><a class="text-muted" href="#">Random feature</a></li>
-        <li><a class="text-muted" href="#">Team feature</a></li>
-        <li><a class="text-muted" href="#">Stuff for developers</a></li>
-        <li><a class="text-muted" href="#">Another one</a></li>
-        <li><a class="text-muted" href="#">Last time</a></li>
+        <li><a class="text-muted" href="/">Home</a></li>
+        <li><a class="text-muted" href="/shop">Shop</a></li>
+        <li><a class="text-muted" href="/login">Log In</a></li>
+        <li><a class="text-muted" href="/signup">Sign Up</a></li>
+        <li><a class="text-muted" href="/admin">Admin</a></li>
+        <li><a class="text-muted" href="/cart">Shopping Cart</a></li>
+      </ul>
+    </div>
+    <div class="col-6 col-md">
+      <h5>Authors</h5>
+      <ul class="list-unstyled text-small">
+        <li><a class="text-muted" target="_blank" href="https://github.com/B-Dionysus">Benjamin Dionysus</a></li>
+        <li><a class="text-muted" target="_blank" href="https://github.com/k1te-m">Kevin Miller</a></li>
+        <li><a class="text-muted" target="_blank" href="https://github.com/jalbert12485">Justin Albert</a></li>
+        <li><a class="text-muted" target="_blank" href="https://github.com/oroth8">Owen Roth</a></li>
       </ul>
     </div>
     <div class="col-6 col-md">
       <h5>Resources</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Resource</a></li>
-        <li><a class="text-muted" href="#">Resource name</a></li>
-        <li><a class="text-muted" href="#">Another resource</a></li>
-        <li><a class="text-muted" href="#">Final resource</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Resources</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Business</a></li>
-        <li><a class="text-muted" href="#">Education</a></li>
-        <li><a class="text-muted" href="#">Government</a></li>
-        <li><a class="text-muted" href="#">Gaming</a></li>
+        <li><a class="text-muted" target="_blank" href="https://www.kaggle.com/">Kaggle</a></li>
       </ul>
     </div>
     <div class="col-6 col-md">
       <h5>About</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Team</a></li>
-        <li><a class="text-muted" href="#">Locations</a></li>
-        <li><a class="text-muted" href="#">Privacy</a></li>
-        <li><a class="text-muted" href="#">Terms</a></li>
+        <li><a class="text-muted" target="_blank" href="https://github.com/oroth8/EcommerceApp">Team Repo</a></li>
       </ul>
     </div>
   </div>

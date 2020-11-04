@@ -1,6 +1,12 @@
 const controller = require("../controller/controller");
 var db = require("../models");
 const passport = require("../config/passport");
+const sequelize=require("sequelize");
+const Op=sequelize.Op;
+// If a user has at least this high accessLevel, then they are an admin
+// The default access level for new uesers is 10
+const ADMIN_LEVEL=100;
+
 // Routes
 // =============================================================
 module.exports = function(app) {
@@ -16,8 +22,9 @@ module.exports = function(app) {
     let item=(results[0].dataValues);
     if(req.user)  
     {
-      let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
-      res.render("adminchangeid", { "item": item, accessGranted});
+      let accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+      res.render("adminchangeid", { "item": item, admin, loggedIn:accessLevel});
     }
     else res.render("/login", {});
   });
@@ -58,8 +65,9 @@ module.exports = function(app) {
           }
           if(req.user)
           {
-            let accessGranted=false; if (req.user.accessLevel>=10) accessGranted=true; 
-            res.render("adminchange", { "item": item, "table": newTable, accessGranted});
+            let accessLevel=req.user.accessLevel;
+            if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+            res.render("adminchange", { "item": item, "table": newTable, admin, loggedIn:accessLevel});
           }
           else res.render("/login",{});
         });
@@ -115,7 +123,11 @@ module.exports = function(app) {
       id: req.user.id
     });
   });
-
+  // Route for logging user out
+  app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+  });
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
@@ -170,7 +182,9 @@ module.exports = function(app) {
     }).then(function(response){
       res.json(response);
     });}else{
-    res.render("cart",{});
+      let accessLevel=0; if(req.user) accessLevel=req.user.accessLevel;
+      if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
+    res.render("cart",{admin, loggedIn:accessLevel});
     }
   });
 
@@ -191,6 +205,34 @@ module.exports = function(app) {
         res.end();
       });
     });
+
+    // Counts the number of sales that occured each day for the past 14 days.
+    app.get("/adminsales/Order", (req,res)=>{
+        let count=0;
+        let dates=[];
+        let orderCount=[0,0,0,0,0,0,0,0,0,0,0,0,0,0];    
+      for(let i=0; i< 14; i++){
+        dates.push(new Date() - (i)*24 * 60 * 60 * 1000);
+          db.Order.count({          
+              where: {
+                createdAt: {
+                  [Op.lte]: new Date() - (i)*24 * 60 * 60 * 1000,
+                  [Op.gt]: new Date() - (i+1)*24 * 60 * 60 * 1000,
+                },
+               },
+             }).then( function(results){
+               count++;
+               orderCount[13-i]=results;
+               if(count==14){
+                 res.json({"orderCount": orderCount, "dates":dates});
+               }
+             })
+    
+        }
+ 
+         
+
+     });
     
 
 };
