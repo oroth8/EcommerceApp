@@ -1,30 +1,17 @@
-
-{{!-- <div>
-{{#each products}}
-<h1>{{dataValues.brand}}</h1>
-{{dataValues.name}}
-{{dataValues.catergory}}
-{{dataValues.subCategory}}
-{{dataValues.price}}
-{{dataValues.image_URLs}}
-{{dataValues.createAt}}
-{{dataValues.updatedAt}}
-{{/each}}
-</div> --}}
-
 <div class="container">
     <div class="row row-cols-3">
          {{#each products}}
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
+                    <a class="card-img-top shopImg" href="/shop/product/{{dataValues.id}}">
                     <img src="{{dataValues.image_URLs}}" class="card-img-top shopImg" alt="{{dataValues.name}}">
+                    </a>
                     <div class="card-body cardSize">
-                      <h5 class="card-title">{{dataValues.name}}</h5>
+                      <h5 class="card-title"><a href="/shop/product/{{dataValues.id}}">{{dataValues.name}}</a></h5>
                     </div>
                     <hr/>
                     <div class="btnSpot divider row">
-                      <a href="/shop/product/{{dataValues.id}}" class="btn btn-primary col-auto">Buy</a><h5 class="card-title price col-auto">${{dataValues.price}}</h5>
-                      <button class="btn btn-round btn-danger add-to-cart ml-auto col-auto" data-id="{{dataValues.id}}" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                      <button class="btn btn-round btn-danger add-to-cart col-auto" data-id="{{dataValues.id}}" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</button><h5 class="card-title price col-auto">${{dataValues.price}}</h5>
                     </div> 
                       
                 </div>
