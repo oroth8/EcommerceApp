@@ -151,16 +151,20 @@ app.get('/search', (req,res)=>{
   }); 
 
     app.get("/admin/:table", (req,res)=>{
-     if (req.user) {        
-         if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-        db.Product.findAll({}).then((data)=>{
-          res.render("adminProduct",{accessGranted:accessGranted, data:data})
+    db.Product.findAll({ group: "subCategory" }).then((allProducts) => {
+      if (req.user) {
+        if (req.user.accessLevel >= 10) accessGranted = true;
+        else accessGranted = false;
+        db.Product.findAll({}).then((data) => {
+          res.render("adminProduct", {
+            allProducts,
+            accessGranted: accessGranted,
+            data: data,
+          });
         });
-      }
-      else res.render("login");
-      
+      } else res.render("login");
     });
-
+  })
     // admin get route, will display all information from a chosen table if no category, otherwise will display the category column.
     app.get("/admin/:table/:category", function(req,res){
       let table=req.params.table;
