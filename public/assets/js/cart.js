@@ -16,9 +16,18 @@ function viewCart(){
                     }
                 }
             let newLi=$("<li>");
-            newLi.html(`<img src="${results[i].img_URLs}" class="cart-img"> Name: ${results[i].name} Price: $ ${results[i].price} Quantity: ${count[i]}  <button type="button" class="close" data-id="${results[i].id}" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>`);
+            newLi.html(`<div class="row">
+                            <div class="col-2"><img src="${results[i].image_URLs}" class="cart-img"> </div>
+                            <div class="col-5 cart-name">Name: ${results[i].name} </div>
+                            <div class="col-2"><button type="button" class="close" data-id="${results[i].id}" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button></div>
+                            <div class="3"></div>
+                        </div>
+                        <div class="row  border-bottom border-primary m-bottom-2">
+                            <div class="col-2"></div>
+                            <div class="col-5">Price: $ ${results[i].price} </div>
+                            <div class="col-5">Quantity: ${count[i]}</div>
+                        </div>`);
             newUl.append(newLi);
         }
         $("#cart-body").append(newUl);
