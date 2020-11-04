@@ -47,13 +47,15 @@ $("#finalize-checkout").on("click",function(e){
         $.post("/order",{"id": val}).done(function(){
             count++;
             if(count==limitCart.length){
-                console.log("done");
+                limitCart=[];
+                localStorage.setItem("limitCart", JSON.stringify(limitCart)); 
                 window.location.href = "/checkout/thankyou";
             }
         });
 
     });
     });
+
 
 
 
