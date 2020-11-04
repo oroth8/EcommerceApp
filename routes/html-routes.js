@@ -16,9 +16,9 @@ module.exports = function(app) {
         // Default uses have an access level of 10
         // If we want to, we can make the defaul accesslevel lower, and make a new
         // class of users, admins, with an access level of ten.
-        if(accessLevel>=10) accessGranted=true; else accessGranted=false;
-        // If we pass accessGranted=true to the main page, it will display the admin button
-        res.render("landing",{layout:"main", allProducts, accessGranted:accessGranted});
+        if(accessLevel>=10) admin=true; else admin=false;
+        // If we pass admin=true to the main page, it will display the admin button
+        res.render("landing",{layout:"main", allProducts, admin, loggedIn:accessLevel});
       })
         
 
@@ -27,18 +27,18 @@ module.exports = function(app) {
     app.get("/login", (req, res) => {
         // If the user already has an account send them to the members page
         if (req.user) {
-            if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-            // If we pass accessGranted=true to the main page, it will display the admin button
-            res.render("landing",{layout:"main", accessGranted:accessGranted});
+            if(req.user.accessLevel>=10) admin=true; else admin=false;
+            // If we pass admin=true to the main page, it will display the admin button
+            res.render("landing",{layout:"main", admin:admin});
         }
         else res.render("login", {});
       });      
       app.get("/signup", (req, res) => {
           // If the user already has an account send them to the members page
           if (req.user) {
-            if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-            // If we pass accessGranted=true to the main page, it will display the admin button
-            res.render("landing",{layout:"main", accessGranted:accessGranted});
+            if(req.user.accessLevel>=10) admin=true; else admin=false;
+            // If we pass admin=true to the main page, it will display the admin button
+            res.render("landing",{layout:"main", admin:admin});
            
           }
           else  res.render("signup",{});
@@ -51,9 +51,9 @@ module.exports = function(app) {
     db.Product.findAll()
   .then(products => {
     
-    let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+    let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
     res.render('productlist', {layout: "main", allProducts,
-        products,accessGranted
+        products,admin
     });
   }).catch(err=>console.log(err))
   })
@@ -67,8 +67,8 @@ module.exports = function(app) {
           subCategory: category,
         },
       }).then((products) => {
-        let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-        res.render("productlist", { layout: "main", allProducts, products,accessGranted });
+        let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
+        res.render("productlist", { layout: "main", allProducts, products,admin });
       });
     });
   
@@ -83,8 +83,8 @@ module.exports = function(app) {
         }
       }).then(result => {
         let {id, brand, name, category, subCategory, price, image_URLs} = result[0];                          
-        let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-        res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, accessGranted});
+        let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
+        res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, admin});
       }).catch(err=>console.log(err))});
     })
   
@@ -107,9 +107,9 @@ app.get('/search', (req,res)=>{
   .then(products => {
     console.log(products);
     
-    let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+    let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
     res.render('productlist', {layout: "main",
-          products,accessGranted
+          products,admin
       });
     });
 });
@@ -125,8 +125,8 @@ app.get('/search', (req,res)=>{
 // Send the user to the admin home page.
   app.get("/admin", function(req,res){
     if (req.user) {        
-        if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-        res.render("adminhome",{accessGranted:accessGranted});
+        if(req.user.accessLevel>=10) admin=true; else admin=false;
+        res.render("adminhome",{admin:admin});
       }
       else res.render("login", {});
     });   
@@ -143,17 +143,17 @@ app.get('/search', (req,res)=>{
           }).then(function(results){
               let item=(results[0].dataValues);
               
-              if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
-              res.render("adminadd", { "item": item, accessGranted:accessGranted});
+              if(req.user.accessLevel>=10) admin=true; else admin=false;
+              res.render("adminadd", { "item": item, admin:admin});
           });
       }else res.render("login", {});
   }); 
 
     app.get("/admin/:table", (req,res)=>{
      if (req.user) {        
-         if(req.user.accessLevel>=10) accessGranted=true; else accessGranted=false;
+         if(req.user.accessLevel>=10) admin=true; else admin=false;
         db.Product.findAll({}).then((data)=>{
-          res.render("adminProduct",{accessGranted:accessGranted, data:data})
+          res.render("adminProduct",{admin:admin, data:data})
         });
       }
       else res.render("login");
@@ -216,15 +216,15 @@ app.get('/search', (req,res)=>{
 
 
     app.get("/cart", function(req,res){      
-      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("cart",{accessGranted});
+      let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
+      res.render("cart",{admin});
     });
 
 
 
     app.get("/checkout/thankyou",function(req,res){
-      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
-      res.render("thankyou",{accessGranted})
+      let admin=false; if (req.user && req.user.accessLevel>=10) admin=true; 
+      res.render("thankyou",{admin})
     });
 
 };

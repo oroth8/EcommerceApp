@@ -16,7 +16,6 @@ function viewCart(){
                     }
                 }
             let newLi=$("<li>");
-            console.log(results[i]);
             newLi.html(`<div class="row">
                             <div class="col-2"><img src="${results[i].image_URLs}" class="cart-img"> </div>
                             <div class="col-5 cart-name">Name: ${results[i].name} </div>
