@@ -3,7 +3,6 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 const path=require("path");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const { mainModule } = require("process");
 
 // Routes
 // =============================================================
@@ -45,23 +44,17 @@ module.exports = function(app) {
           else  res.render("signup",{});
         });
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/members.html"));
-  });
-
-
-
 
   // Display products on productlist
   app.get('/shop', (req,res)=> 
   db.Product.findAll({group: "subCategory"}).then(allProducts => {
     db.Product.findAll()
   .then(products => {
-      res.render('productlist', {layout: "main", allProducts,
-          products,
-      });
+    
+    let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+    res.render('productlist', {layout: "main", allProducts,
+        products,accessGranted
+    });
   }).catch(err=>console.log(err))
   })
   );
@@ -74,7 +67,8 @@ module.exports = function(app) {
           subCategory: category,
         },
       }).then((products) => {
-        res.render("productlist", { layout: "main", allProducts, products });
+        let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+        res.render("productlist", { layout: "main", allProducts, products,accessGranted });
       });
     });
   
@@ -88,10 +82,9 @@ module.exports = function(app) {
           id: req.params.id
         }
       }).then(result => {
-                  console.log(result);
-                  let {id, brand, name, category, subCategory, price, image_URLs} = result[0];
-                  console.log( id, brand, name);
-                res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts});
+        let {id, brand, name, category, subCategory, price, image_URLs} = result[0];                          
+        let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+        res.render("indvProduct", {layout: 'main',id, brand, name, category, subCategory, price, image_URLs, allProducts, accessGranted});
       }).catch(err=>console.log(err))});
     })
   
@@ -113,8 +106,10 @@ app.get('/search', (req,res)=>{
     }})
   .then(products => {
     console.log(products);
+    
+    let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
     res.render('productlist', {layout: "main",
-          products,
+          products,accessGranted
       });
     });
 });
@@ -198,14 +193,16 @@ app.get('/search', (req,res)=>{
     });
 
 
-    app.get("/cart", function(req,res){
-      res.render("cart",{});
+    app.get("/cart", function(req,res){      
+      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+      res.render("cart",{accessGranted});
     });
 
 
 
     app.get("/checkout/thankyou",function(req,res){
-      res.render("thankyou",{})
+      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+      res.render("thankyou",{accessGranted})
     });
 
 };
