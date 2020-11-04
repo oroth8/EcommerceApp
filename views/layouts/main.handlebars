@@ -45,6 +45,7 @@
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {{#each allProducts}}
           <a class="dropdown-item" href="/shop/{{dataValues.subCategory}}">{{dataValues.subCategory}}</a>
+          <div class="dropdown-divider"></div>
         {{/each}}
       </div>
 	  {{#if accessGranted}}
