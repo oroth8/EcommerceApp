@@ -205,4 +205,9 @@ app.get('/search', (req,res)=>{
       res.render("thankyou",{accessGranted})
     });
 
+    app.get("/adminsales",function(req,res){
+      let accessGranted=false; if (req.user && req.user.accessLevel>=10) accessGranted=true; 
+      res.render("adminsales",{accessGranted})
+    });
+
 };
