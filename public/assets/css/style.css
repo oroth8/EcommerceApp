@@ -134,11 +134,11 @@ table, th, td {
   }
 
   .indvProDesc{
-display: inline-block;
-margin-left: 50px;
+    display: inline-block;
+   margin-left: 50px;
   }
 
-  #productImg{
+  #indvProductImg{
     height: 175px;
     width: 175px;
     float: left;
