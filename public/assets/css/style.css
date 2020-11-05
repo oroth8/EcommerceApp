@@ -207,7 +207,12 @@ display: inline-block;
 
 
 /* // Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { }
+@media (min-width: 576px) { 
+  .product-image {
+    width: 50%;
+    margin: auto;
+  }
+}
 
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
@@ -243,6 +248,7 @@ display: inline-block;
     left: -10%;
     background-color: #e5e5e5;
   }
+
   
  }
 
