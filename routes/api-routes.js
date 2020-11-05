@@ -24,7 +24,7 @@ module.exports = function(app) {
     {
       let accessLevel=req.user.accessLevel;
       if(accessLevel>=ADMIN_LEVEL) admin=true; else admin=false;
-      res.render("adminchangeid", { "item": item, admin, loggedIn:accessLevel});
+        res.render("adminchangeid", { "item": item, admin, loggedIn:accessLevel});
     }
     else res.render("/login", {});
   });

@@ -2,45 +2,22 @@
 
 <div class="container">
 {{!-- Loops through the item to display the keys as headers. --}}
-<table >
-    <tr >
-        {{#each item}}
-        <th >
-            {{@key}}
-        </th >
-        {{/each}}
-
-    </tr>
-{{!-- displays current views. --}}
-    <tr >
-        {{#each item}}
-            <td >
-             {{this}}
-            </td>
-        {{/each}}   
-    </tr>
-    
-
-{{!-- creates a row with the input forms. --}}
-<tr>
-
-        {{#each item}}
-            <td >
-<form>
-  <div class="form-row align-items-center">
-    <div class="col-auto">
-      <label class="sr-only" for="id-{{@key}}">Name</label>
-      <input type="text" class="form-control mb-2" id="id-{{@key}}">
-    </div>
-    <div class="col-auto">
-      <button type="button" class="btn btn-primary mb-2 change-submit" data-cat="{{@key}}">Submit</button>
-    </div>
-  </div>
-</form> 
-            </td>
-        {{/each}}   
-</tr>      
-</table>   
+<div class="row">
+  <div class="col">{{item.id}}</div>
+  <div class="col">{{item.brand}}</div>
+  <div class="col">{{item.name}}</div>
+  <div class="col">{{item.category}}</div>
+  <div class="col">{{item.subCategory}}</div>
+  <div class="col">{{item.price}}</div>
+</div>
+<div class="row">
+ <div class="col"></div>
+ <div class="col"><label class="sr-only" for="id-brand">Brand</label><input type="text" class="form-control mb-2" id="id-brand"><button type="button" class="btn btn-primary mb-2 change-submit" data-cat="brand">Submit</button></div>
+ <div class="col"><label class="sr-only" for="id-name">Name</label><input type="text" class="form-control mb-2" id="id-name"><button type="button" class="btn btn-primary mb-2 change-submit" data-cat="name">Submit</button></div>
+ <div class="col"><label class="sr-only" for="id-category">category</label><input type="text" class="form-control mb-2" id="id-category"><button type="button" class="btn btn-primary mb-2 change-submit" data-cat="category">Submit</button></div>
+ <div class="col"><label class="sr-only" for="id-subCategory">subCategory</label><input type="text" class="form-control mb-2" id="id-subCategory"><button type="button" class="btn btn-primary mb-2 change-submit" data-cat="subCategory">Submit</button></div>
+ <div class="col"><label class="sr-only" for="id-price">rice</label><input type="text" class="form-control mb-2" id="id-price"><button type="button" class="btn btn-primary mb-2 change-submit" data-cat="price">Submit</button></div>
+</div>
 
 {{!-- Sends user back to main product view with options --}}
 <button type="button" class="btn btn-primary m-4" id="back-to-product">Back to All Product</button>
