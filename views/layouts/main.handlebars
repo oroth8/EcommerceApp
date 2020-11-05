@@ -84,10 +84,14 @@
             <span href="/cart" id="cart-count"></span>
           </svg>
         </a>
-        <form action="/search" class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
-          <button value="Search" class="btn btn-outline-success my-2 my-sm-0 d-inline" id="navSearch" type="submit">Search</button>
-        </form>
+        <div class="container">
+          <div class="row">
+            <form action="/search" class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" name="term" type="search" placeholder="Search" aria-label="Search">
+              <button value="Search" class="btn btn-outline-success my-2 my-sm-0 d-inline" id="navSearch" type="submit">Search</button>
+           </form>
+          </div>
+        </div>
   
         {{#if loggedIn}}
         <a class="py-2 d-none d-md-inline-block nav-item nav-link" href="/logout">Logout</a>
