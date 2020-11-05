@@ -13,7 +13,7 @@ $(document).ready(() => {
       };
   
       if (!userData.username || !userData.password) {
-        console.log("modal");
+
         // modal jquery to pop up modal when login error occurs
         $("#login-modal").modal({
           show: true

@@ -1,3 +1,5 @@
+// Used to create a table and entries that keeps track of users that have registered.
+
 // Requiring bcrypt for password hashing. Using the bcryptjs version as the regular bcrypt module sometimes causes errors on Windows machines
 const bcrypt = require("bcryptjs");
 const { INTEGER } = require("sequelize");
