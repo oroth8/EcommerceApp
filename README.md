@@ -1,7 +1,6 @@
 # Group Project 2: Limit Electronics
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 ## Description
-![Presentation](https://docs.google.com/presentation/d/1v5SU1JSuhlz5lkOo3rbhT-56h3BVbs-ItC-dXUTo5w0/edit?usp=sharing)
 This is as mock ecommerce site. Product data is stored in a MySQL database, and the users can browse in a variety of ways. They can see all of our products on one page, they can refine their search to a particular category or brand of product via a dropdown menu, and they can search for all products that partially match a string (e.g., "television"). 
 
 Users can optionally create an account, and log in and log out. While logged in, they can view their member information.
@@ -21,10 +20,13 @@ All pages are fully responsive, and should work just as well on mobile devices a
 * [Contribution Instructions](#How%20to%20Contribute)
 * [Exciting Trivia](#Exciting%20Trivia)
 * [Screenshot](#Screenshot)
+* [Presentation](#Presentation)
 * [License](#License)
 * [Questions](#Questions)
 ## Installation Instructions
 In the same directory as package.json, type ```npm install```. You will also need to set up a mySQL database, of course. The fully test the functionality, you will need to create a new user account (navigate to "/signup" in your browser). You will also need an admin account. For our heroku installation, please use the account ```"admin"``` with the password ``"god"``.
+## Presentation
+[Presentation](https://docs.google.com/presentation/d/1v5SU1JSuhlz5lkOo3rbhT-56h3BVbs-ItC-dXUTo5w0/edit?usp=sharing)
 ## Live URL
 https://fierce-earth-38835.herokuapp.com/
 ## Github Repo
