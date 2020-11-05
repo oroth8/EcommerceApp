@@ -1,3 +1,5 @@
+// Creates the product table and allows us to create entries.  For the product, we can input brand, name, category, subcategory, price and an image url.  The database will then assign an id, createdat or updatedat value.
+
 'use strict';
 const {
   Model

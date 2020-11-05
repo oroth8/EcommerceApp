@@ -1,3 +1,5 @@
+// Will create a table within the database for orders.  The categories are product id and user id.  These are both foriegn keys that reference the product and user tables respectively.  Note each item ordered is entered as a seperate order when checkout is clicked.
+
 const {
     Model
   } = require('sequelize');
