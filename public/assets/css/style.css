@@ -203,7 +203,9 @@ display: inline-block;
 .dashboard-container {
   margin: auto;
 }
-
+.dropdown-container {
+  display: inline-block;
+}
 
 
 /* // Small devices (landscape phones, 576px and up) */
