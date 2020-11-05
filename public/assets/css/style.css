@@ -177,5 +177,27 @@ display: inline-block;
     text-align: center;
     padding: 25px;
   }
+  .dropdown-container {
+    position: relative;
+  }
+  .nav {
+    justify-content: center;
+  }
+  button.navbar-toggler {
+    position: absolute !important;
+    right: 10px !important;
+    top: 14px !important;
+}
+.nav a {
+  text-align: center;
+  width: 15%;
+}
+.nav-item {
+  text-align: left;
+}
+
+
+
+
 /* End custom CSS */
 
