@@ -79,6 +79,12 @@ table, th, td {
     -ms-flex: 1;
     flex: 1;
   }
+  @media (min-width: 768px) {
+    .flex-md-equal > * {
+      -ms-flex: 1;
+      flex: 1;
+    }
+  }
   
   .overflow-hidden { overflow: hidden; }
 /* END BOOSTRAP CSS */
@@ -129,11 +135,12 @@ table, th, td {
 
   .indvProDesc{
 display: inline-block;
+margin-left: 50px;
   }
 
   #productImg{
-    height: 250px;
-    width: 250px;
+    height: 175px;
+    width: 175px;
     float: left;
   }
 
@@ -189,11 +196,12 @@ display: inline-block;
 .nav-item {
   text-align: left;
 }
+
 .bootdey {
   width: 100%;
   
 }
-.bootdey #productImg {
+ #productImg {
   width: 100%;
   height: auto;
   margin-left: auto;
@@ -317,7 +325,6 @@ display: inline-block;
     background-color: #e5e5e5;
   }
 }
-
 
 
 
