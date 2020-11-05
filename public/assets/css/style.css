@@ -135,14 +135,30 @@ table, th, td {
 
   .indvProDesc{
     display: inline-block;
-   margin-left: 50px;
+   /* margin-left: 50px; */
+  }
+  @media screen and (max-width: 800px) {
+    #indvProductImg {
+      float: none;
+      width: 100%;
+      margin-left: 0px;
+    }
   }
 
+  @media screen and (min-width: 800px){
   #indvProductImg{
     height: 175px;
     width: 175px;
     float: left;
   }
+}
+
+@media screen and (min-width: 800px){
+  .indvProDesc{
+    display: inline-block;
+    margin-left: 50px;
+  }
+}
 
   .panel-body{
     margin: 50px;
