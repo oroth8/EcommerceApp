@@ -21,6 +21,13 @@ function removeFromCart(id){
 $(".add-to-cart").on("click",function(e){
     e.preventDefault();
     addToCart(this.dataset.id);
+    getItemQuantity(this.dataset.id);
+});
+
+$(".remove-from-cart").on("click",function(e){
+    e.preventDefault();
+    removeFromCart(this.dataset.id);
+    getItemQuantity(this.dataset.id);
 })
 
 // $("#reload-cart").on("click",viewCart);
@@ -31,5 +38,13 @@ function updateCartCount(){
 }
 $(document).ready(updateCartCount);
 
-
+function getItemQuantity(id){
+    let count=0;
+    for(let i=0; i<limitCart.length; i++){
+        if(limitCart[i]==id){
+            count++;
+        }
+    }
+    $("#quantity").text(count);
+}
 
