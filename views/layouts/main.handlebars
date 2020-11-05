@@ -39,6 +39,8 @@
     <a class="py-2" href="/" aria-label="Product">
         <img src="/assets/img/justlogo.png" class="img-fluid" alt="Responsive image" id="navLogo">
     </a>
+
+
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Products
       </a>
@@ -51,8 +53,19 @@
 	  {{#if admin}}
     <a class="py-2 d-none d-md-inline-block" href="/admin">Admin</a>
     {{/if}}
-    <a class="py-2 d-none d-md-inline-block" href="#">Brands</a>
-    
+
+
+       <a class="nav-link dropdown-toggle" href="#" id="navbarBrandDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Brands
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarBrandDropdown">
+        {{#each allProducts}}
+          <a class="dropdown-item" href="/shop/{{dataValues.brand}}">{{dataValues.brand}}</a>
+          <div class="dropdown-divider"></div>
+        {{/each}}
+      </div> 
+
+
 	  {{#if loggedIn}}
     <a class="py-2 d-none d-md-inline-block" href="/account">My Account</a>
     {{/if}}
