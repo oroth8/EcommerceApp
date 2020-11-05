@@ -1,7 +1,7 @@
 # Group Project 2: Limit Electronics
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 ## Description
-This is as mock ecommerce site. Product data is stored in a MySQL database, and the users can browse in a variety of ways. They can see all of our products on one page, they can refine their search to a particular category or brand of product via a dropdown menu, and they can search for all products that partially match a string (e.g., "television").
+This is as mock ecommerce site. Product data is stored in a MySQL database, and the users can browse in a variety of ways. They can see all of our products on one page, they can refine their search to a particular category or brand of product via a dropdown menu, and they can search for all products that partially match a string (e.g., "television"). 
 
 Users can optionally create an account, and log in and log out. While logged in, they can view their member information.
 
