@@ -41,8 +41,10 @@ function viewCart(){
         for(let i=0; i< results.length; i++){
             totalPrice += Number(results[i].price)*Number(count[i]);
         }
-        $("#total-price").html("Total Price : $" + totalPrice);
+        $("#total-price").html("Total Price : $" + Number(totalPrice).toFixed(2));
 
+        }else{
+            $("#total-price").html("Total Price : $ 0.00" );
         }
     });
 };
