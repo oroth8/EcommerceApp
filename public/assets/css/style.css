@@ -184,7 +184,7 @@ display: inline-block;
 }
 .nav a {
   text-align: center;
-  width: 15%;
+  width: 12%;
 }
 .nav-item {
   text-align: left;
@@ -203,7 +203,9 @@ display: inline-block;
 .dashboard-container {
   margin: auto;
 }
-
+.dropdown-container {
+  display: inline-block;
+}
 
 
 /* // Small devices (landscape phones, 576px and up) */
