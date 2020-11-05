@@ -20,10 +20,13 @@ All pages are fully responsive, and should work just as well on mobile devices a
 * [Contribution Instructions](#How%20to%20Contribute)
 * [Exciting Trivia](#Exciting%20Trivia)
 * [Screenshot](#Screenshot)
+* [Presentation](#Presentation)
 * [License](#License)
 * [Questions](#Questions)
 ## Installation Instructions
 In the same directory as package.json, type ```npm install```. You will also need to set up a mySQL database, of course. The fully test the functionality, you will need to create a new user account (navigate to "/signup" in your browser). You will also need an admin account. For our heroku installation, please use the account ```"admin"``` with the password ``"god"``.
+## Presentation
+[Presentation](https://docs.google.com/presentation/d/1v5SU1JSuhlz5lkOo3rbhT-56h3BVbs-ItC-dXUTo5w0/edit?usp=sharing)
 ## Live URL
 https://fierce-earth-38835.herokuapp.com/
 ## Github Repo

@@ -59,7 +59,18 @@
         {{#if admin}}
         <a class="py-2 d-md-inline-block nav-item nav-link" href="/admin">Admin</a>
         {{/if}}
-        <a class="py-2 d-md-inline-block nav-item nav-link" href="#">Brands</a>
+        <div class="dropdown-container">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Brands
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{#each allProducts}}
+            <a class="dropdown-item" href="/shop/{{dataValues.subCategory}}">{{dataValues.brand}}</a>
+            <div class="dropdown-divider"></div>
+            {{/each}}
+          </div>
+        </div>
   
         {{#if loggedIn}}
         <a class="py-2 d-md-inline-block nav-item nav-link" href="/account">My Account</a>
