@@ -274,7 +274,10 @@ table, th, td {
     left: -10%;
     background-color: #e5e5e5;
   }
-
+  .product-image {
+    width: 100%;
+    margin: auto;
+  }
   
  }
 
