@@ -311,6 +311,10 @@ table, th, td {
     left: -5%;
     background-color: #e5e5e5;
   }
+  .product-image {
+    width: 100%;
+    margin: auto;
+  }
  }
 
 /* // Extra large devices (large desktops, 1200px and up) */
